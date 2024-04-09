@@ -44,6 +44,21 @@ export default {
     font-style: normal;
   }
 
+  .modal .actions{
+    text-align: center;
+    margin: 30px 0 10px;
+    color: #333;
+  }
+
+  .modal .actions a{
+    color: #333;
+    padding: 8px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    text-decoration: none;
+    margin: 10px;
+  }
+
   .modal.sale{
     background: crimson;
     color: white;
@@ -52,4 +67,14 @@ export default {
   .modal.sale h1{
     color: white;
   }
+
+  .modal.sale .actions{
+    color: white;
+  }
+
+  .modal.sale .action a{
+    color: white;
+  }
+
+
 </style>
