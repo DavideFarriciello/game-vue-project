@@ -1,6 +1,8 @@
 <template>
   <h1>{{ title }}</h1>
-  <Modal/>
+  <div v-if="showModal">
+    <Modal :header="header" :text="text" theme="sale"/>
+  </div>
 </template>
 
 <script>
@@ -11,7 +13,10 @@ export default {
   components:{ Modal } ,
   data() {
     return {
-      title: 'my first vue app'
+      title: 'my first vue app',
+      header: 'Sign up',
+      text: 'take this',
+      showModal: false,
     }
   },
   methods: {
