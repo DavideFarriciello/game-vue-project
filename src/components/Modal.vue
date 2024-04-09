@@ -2,6 +2,9 @@
   <div class="backdrop" @click.self="closeModal">
     <div class="modal" :class="{sale : theme === 'sale'}">
       <slot></slot>
+      <div class="action">
+        
+      </div>
       <button @click="closeModal">close</button>
     </div>
   </div>
