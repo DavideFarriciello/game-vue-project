@@ -3,7 +3,8 @@
   <p>Welcome...</p>
   <div v-if="showModal">
     <Modal theme="sale" @close="toggleModal">
-      
+      <h1>ciao inja</h1>
+      <p>take thi shit</p>
     </Modal>
   </div>
   <button @click="toggleModal">Open Modal</button>
@@ -18,8 +19,6 @@ export default {
   data() {
     return {
       title: 'my first vue app',
-      header: 'Sign up',
-      text: 'take this',
       showModal: false,
     }
   },
