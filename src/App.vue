@@ -11,7 +11,18 @@
       <p>take thi shit</p>
     </Modal>
   </div>
+  <div v-if="showModalTwo">
+    <Modal theme="sale" @close="toggleModalTwo">
+      <template v-slot:links>
+        <a href="#">disc</a>
+        <a href="#">shit</a>
+      </template>
+      <h1>aglia</h1>
+      <p>nn farlo</p>
+    </Modal>
+  </div>
   <button @click="toggleModal">Open Modal</button>
+  <button @click="toggleModalTwo">Open Second Modal</button>
 </template>
 
 <script>
@@ -24,11 +35,15 @@ export default {
     return {
       title: 'my first vue app',
       showModal: false,
+      showModalTwo: false, 
     }
   },
   methods: {
     toggleModal() {
       this.showModal = !this.showModal
+    },
+    toggleModalTwo(){
+      this.showModalTwo = !this.showModalTwo
     }
   }
 }
