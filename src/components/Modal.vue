@@ -9,7 +9,12 @@
 
 <script>
 export default {
-  props:['header', 'text', 'theme']
+  props:['header', 'text', 'theme'],
+  methods:{
+    closeModal(){
+      this.$emit('close')
+    }
+  }
 }
 </script>
 
