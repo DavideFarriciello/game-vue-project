@@ -1,11 +1,11 @@
 <template>
-  <div id="nav">
-    <RouterLink to="/">Home</RouterLink>
-    <RouterLink to="/about">About</RouterLink>
-    <RouterView />
+  <div>
+    <Header></Header>
   </div>
 </template>
 
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+
+import Home from './pages/Home.vue';
+import Header from './component/Header.vue';
 </script>
