@@ -1,12 +1,10 @@
 <template>
   <div>
-    <Header></Header>
     <Game :games="games"/>
   </div>
 </template>
 
 <script setup>
-import Header from '../component/Header.vue';
 import Game from '@/component/Game.vue';
 
 const games = [

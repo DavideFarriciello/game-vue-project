@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <Home></Home>
+  <Header></Header>
   </div>
 </template>
 
 <script setup>
-import Home from './pages/Home.vue';
+import Header from './component/Header.vue';
 
 </script>
