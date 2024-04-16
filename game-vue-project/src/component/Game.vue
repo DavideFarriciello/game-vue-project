@@ -5,7 +5,7 @@
       <h2 class="text-3xl text-center my-4">{{ game.name }}</h2>
       <img :src="game.image" :alt="game.name">
       <p class="text-3xl text-center my-4">Price: {{ game.price }}</p>
-      <v-btn rounded="xl" size="x-large" block>Rounded xl</v-btn>
+      
     </div>
   </div>
 </template>
