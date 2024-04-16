@@ -4,10 +4,9 @@ import Home from '../pages/Home.vue'
 import Cart from '../pages/Cart.vue'
 import Favorite from '../pages/Favorite.vue'
 import Contact from '../pages/Contact.vue'
+import GameDetails from '../pages/GameDetails.vue'
 
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
+const routes = [
     {
       path: '/',
       name: 'Home',
@@ -28,7 +27,17 @@ const router = createRouter({
       name: 'Contact',
       component: Contact
     },
+    {
+      path: '/game/:name',
+      name: 'GameDetails',
+      component: GameDetails,
+      props: true
+    }
   ]
-})
+
+  const router = createRouter({
+    history: createWebHistory(),
+    routes
+  })
 
 export default router
