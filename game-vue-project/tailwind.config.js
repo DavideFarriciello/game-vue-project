@@ -1,17 +1,25 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [ "./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
+  mode: 'jit',
+  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      colors:{
+      colors: {
 
       },
     },
-    fontFamily:{
-      
+    fontFamily: {
+
     },
-    screens:{
-      
+    screens: {
+
+    }
+
+  },
+  variants: {
+    extend: {
+      translate: ['hover', 'group-hover'], // Ensures translate utilities are active on hover
+      textColor: ['hover', 'group-hover'],
     }
   },
   plugins: [],

@@ -7,3 +7,12 @@
   
 }
 
+.hover-shadow-red:hover {
+  box-shadow: 0 3px 25px 5px rgba(74, 4, 78, 0.5), 0 4px 6px -4px rgba(74, 4, 78, 0.5);
+}
+
+.hover-translate:hover{
+  --tw-translate-y: -0.25rem/* -4px */;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+

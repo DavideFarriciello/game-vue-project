@@ -1,10 +1,17 @@
 <template>
-  <div class="flex justify-between align-middle bg-red-400 h-16 pl-40 py-4">
-    <router-link :to="{ name: 'Home' }" class="text-3xl">Game Shop</router-link>
-    <div class="w-[600px] flex justify-between">
-      <router-link :to="{ name: 'Cart' }" class="text-2xl">Cart</router-link>
-      <router-link :to="{ name: 'Favorite' }" class="text-2xl">Favorite</router-link>
-      <router-link :to="{ name: 'Contact' }" class="text-2xl">Contact us</router-link>
+  <div>
+    <div class="flex justify-between items-center bg-gradient-to-r from-fuchsia-900 to-slate-950 h-16 px-10 py-2 shadow-md">
+      <router-link :to="{ name: 'Home' }"
+        class="text-4xl font-bold text-white transition duration-300 ease-in-out hover:text-fuchsia-200 hover:-translate-y-1">Game Shop</router-link>
+      
+      <div class="space-x-8">
+        <router-link :to="{ name: 'Cart' }"
+          class="text-xl text-white transition duration-300 ease-in-out hover:text-fuchsia-200 hover:-translate-y-1">Cart</router-link>
+        <router-link :to="{ name: 'Favorite' }"
+          class="text-xl text-white transition duration-300 ease-in-out hover:text-fuchsia-200 hover:-translate-y-1">Favorite</router-link>
+        <router-link :to="{ name: 'Contact' }"
+          class="text-xl text-white transition duration-300 ease-in-out hover:text-fuchsia-200 hover:-translate-y-1">Contact us</router-link>
+      </div>
     </div>
     <router-view/>
   </div>
