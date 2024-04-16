@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-wrap justify-center p-5">
-    <div v-for="game in games" :key="game" @click="onSubmit"
+    <div v-for="game in games" :key="game"
       class="bg-white-game rounded-lg w-64 ml-7 mb-20 shadow-2xl hover-shadow-red transition-all duration-300 ease-in-out hover:scale-105 hover:cursor-pointer">
       <img :src="game.image" :alt="game.name" class="pt-1 px-1">
       <h2 class="text-xl text-center my-4">{{ game.name }}</h2>
