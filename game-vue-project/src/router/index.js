@@ -28,7 +28,7 @@ const routes = [
       component: Contact
     },
     {
-      path: '/game/:name',
+      path: '/game-details',
       name: 'GameDetails',
       component: GameDetails,
       props: true
