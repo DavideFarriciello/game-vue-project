@@ -31,7 +31,7 @@ const routes = [
       path: '/game-details',
       name: 'GameDetails',
       component: GameDetails,
-      props: true
+      props: route => ({ game: route.query.game, games: route.query.games })
     }
   ]
 

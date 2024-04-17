@@ -13,7 +13,7 @@
           class="text-xl text-white transition duration-300 ease-in-out hover:text-fuchsia-200 hover:-translate-y-1">Contact us</router-link>
       </div>
     </div>
-    <router-view/>
+    <router-view :key="$route.fullPath"/>
   </div>
 </template>
 
