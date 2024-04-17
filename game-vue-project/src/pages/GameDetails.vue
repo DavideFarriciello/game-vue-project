@@ -37,8 +37,6 @@ const game = JSON.parse(route.query.game);
 const toast = useToast();
 
 const addToCart = (game) => {
-  console.log(`Added ${game.name} to cart`);
-
   toast.success(`Added ${game.name} to cart!`, {
     timeout: 4000
   });
