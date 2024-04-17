@@ -25,6 +25,7 @@ import 'primeicons/primeicons.css'
 import { useToast } from 'vue-toastification';
 import { useRouter } from 'vue-router'
 import { defineProps } from 'vue';
+import { inject } from 'vue';
 
 const props = defineProps({
   games: Array
@@ -32,11 +33,12 @@ const props = defineProps({
 
 const toast = useToast();
 
+const cartStore = inject('cartStore');
+
 const addToCart = (game) => {
-  toast.success(`Added ${game.name} to cart!`, {
-    timeout: 4000
-  });
-}
+  cartStore.addToCart(game);
+  toast.success(`Added ${game.name} to cart!`, { timeout: 4000 });
+};
 
 const addToFavorite = (game) => {
   toast.success(`Added ${game.name} to favorite!`, {

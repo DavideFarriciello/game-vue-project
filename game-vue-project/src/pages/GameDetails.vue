@@ -39,6 +39,9 @@ import Game from '@/component/Game.vue';
 import { watch, ref, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
+import { inject } from 'vue';
+
+const cartStore = inject('cartStore');
 
 const route = useRoute();
 const router = useRouter();
@@ -52,7 +55,7 @@ const otherGames = computed(() => {
 });
 
 const addToCart = (game) => {
-  console.log(`Added ${game.name} to cart`);
+  cartStore.addToCart(game);
   toast.success(`Added ${game.name} to cart!`, { timeout: 4000 });
 };
 
