@@ -12,8 +12,9 @@
         Add to Cart
       </button>
       <i
-        @click.stop="addToFavorites(game)"
-        class="pi pi-heart ml-8 text-4xl bg-white-game hover:text-fuchsia-900  hover:-translate-y-1 transition duration-300 ease-in-out"></i>
+          @click.stop="addToFavorites(game)"
+          :class="['pi pi-heart ml-8 text-4xl bg-white-game hover:-translate-y-1 transition duration-300 ease-in-out', favoritedIds.has(game.id) ? 'text-fuchsia-900' : 'hover:text-fuchsia-900']">
+        </i>
       </div>
     </div>
   </div>
@@ -24,7 +25,7 @@
 import 'primeicons/primeicons.css'
 import { useToast } from 'vue-toastification';
 import { useRouter } from 'vue-router'
-import { inject } from 'vue';
+import { inject, reactive } from 'vue';
 
 const props = defineProps({
   games: Array
@@ -33,7 +34,7 @@ const props = defineProps({
 const toast = useToast();
 
 const cartStore = inject('cartStore');
-const favoritesStore = inject('cartStore');
+const favoritedIds = reactive(new Set(cartStore.favorites.map(item => item.id)));
 
 const addToCart = (game) => {
   const added = cartStore.addToCart(game);
@@ -47,8 +48,9 @@ const addToCart = (game) => {
 
 
 const addToFavorites = (game) => {
-  const added = favoritesStore.addToFavorites(game);
+  const added = cartStore.addToFavorites(game);
   if (added) {
+    favoritedIds.add(game.id);
     toast.success(`Added ${game.name} to favorites!`, { timeout: 4000 });
   } else {
     toast.warning(`${game.name} is already in the favorites`, { timeout: 4000 });
