@@ -7,9 +7,9 @@
       <h2 class="text-xl text-center my-4">{{ game.name }}</h2>
       <p class="text-xl text-center my-4">Price: {{ game.price }}€</p>
       <div class="flex flex-row">
-      <button @click.stop="addToCart(game)"
-        class="bg-slate-950 text-white font-bold py-2 px-4 ml-2 mb-2 rounded-lg shadow hover:bg-fuchsia-900 hover:shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out">
-        Add to Cart
+        <button @click.stop="addToCart(game)"
+        :class="['bg-slate-950 text-white font-bold py-2 w-32 ml-2 mb-2 rounded-lg shadow hover:-translate-y-1 transition duration-300 ease-in-out', cartIds.has(game.id) ? 'bg-fuchsia-900 hover:bg-slate-950' : 'hover:bg-fuchsia-900 hover:shadow-lg']">
+        {{ cartIds.has(game.id) ? 'Added ' : 'Add to Cart' }}
       </button>
       <i
           @click.stop="addToFavorites(game)"
@@ -34,11 +34,14 @@ const props = defineProps({
 const toast = useToast();
 
 const cartStore = inject('cartStore');
+const cartIds = reactive(new Set(cartStore.cart.map(item => item.id)));
 const favoritedIds = reactive(new Set(cartStore.favorites.map(item => item.id)));
+
 
 const addToCart = (game) => {
   const added = cartStore.addToCart(game);
   if (added) {
+    cartIds.add(game.id);
     toast.success(`Added ${game.name} to cart!`, { timeout: 4000 });
   } else {
     toast.warning(`${game.name} is already in the cart`, { timeout: 4000 });

@@ -9,10 +9,10 @@
         <h2 class="text-xl">{{ game.console }}</h2>
         <h2 class="text-3xl mt-12">Price: {{ game.price }}€</h2>
         <div class="flex flex-row">
-        <button @click="addToCart(game)"
-          class="bg-slate-950 text-white font-bold text-xl w-52 py-6 ml-2 mt-5 rounded-3xl shadow hover:bg-fuchsia-900 hover:shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out">
-          Add to Cart
-        </button>
+        <button @click.stop="addToCart(game)"
+        :class="['bg-slate-950 text-white font-bold text-xl w-52 py-6 ml-2 mt-5 rounded-3xl shadow hover:bg-fuchsia-900 hover:shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out', cartIds.has(game.id) ? 'bg-fuchsia-900 hover:bg-slate-950' : 'hover:bg-fuchsia-900 hover:shadow-lg']">
+        {{ cartIds.has(game.id) ? 'Added ' : 'Add to Cart' }}
+      </button>
         <i
         @click.stop="addToFavorites(game)"
         :class="['pi pi-heart ml-8 mt-8 text-5xl bg-white-game hover:-translate-y-1 transition duration-300 ease-in-out hover:cursor-pointer',favoritedIds.has(game.id) ? 'text-fuchsia-900' : 'hover:text-fuchsia-900']"></i>
@@ -42,6 +42,7 @@ import { useToast } from 'vue-toastification';
 import { inject, reactive } from 'vue';
 
 const cartStore = inject('cartStore');
+const cartIds = reactive(new Set(cartStore.cart.map(item => item.id)));
 const favoritedIds = reactive(new Set(cartStore.favorites.map(item => item.id)));
 
 
@@ -59,6 +60,7 @@ const otherGames = computed(() => {
 const addToCart = (game) => {
   const added = cartStore.addToCart(game);
   if (added) {
+    cartIds.add(game.id);
     toast.success(`Added ${game.name} to cart!`, { timeout: 4000 });
   } else {
     toast.warning(`${game.name} is already in the cart`, { timeout: 4000 });

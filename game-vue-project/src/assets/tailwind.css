@@ -20,3 +20,10 @@
   background-color: whitesmoke;
 }
 
+.text-gradient-from-fucsia {
+  background: linear-gradient(to right, #702459, #1e293b); /* Fuchsia 900 to Slate 950 */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
