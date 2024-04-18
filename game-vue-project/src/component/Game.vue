@@ -12,7 +12,7 @@
         Add to Cart
       </button>
       <i
-        @click.stop="addToFavorite(game)"
+        @click.stop="addToFavorites(game)"
         class="pi pi-heart ml-8 text-4xl bg-white-game hover:text-fuchsia-900  hover:-translate-y-1 transition duration-300 ease-in-out"></i>
       </div>
     </div>
@@ -24,7 +24,6 @@
 import 'primeicons/primeicons.css'
 import { useToast } from 'vue-toastification';
 import { useRouter } from 'vue-router'
-import { defineProps } from 'vue';
 import { inject } from 'vue';
 
 const props = defineProps({
@@ -34,17 +33,27 @@ const props = defineProps({
 const toast = useToast();
 
 const cartStore = inject('cartStore');
+const favoritesStore = inject('cartStore');
 
 const addToCart = (game) => {
-  cartStore.addToCart(game);
-  toast.success(`Added ${game.name} to cart!`, { timeout: 4000 });
+  const added = cartStore.addToCart(game);
+  if (added) {
+    toast.success(`Added ${game.name} to cart!`, { timeout: 4000 });
+  } else {
+    toast.warning(`${game.name} is already in the cart`, { timeout: 4000 });
+  }
 };
 
-const addToFavorite = (game) => {
-  toast.success(`Added ${game.name} to favorite!`, {
-    timeout: 4000
-  });
-}
+
+
+const addToFavorites = (game) => {
+  const added = favoritesStore.addToFavorites(game);
+  if (added) {
+    toast.success(`Added ${game.name} to favorites!`, { timeout: 4000 });
+  } else {
+    toast.warning(`${game.name} is already in the favorites`, { timeout: 4000 });
+  }
+};
 
 const router = useRouter();
 

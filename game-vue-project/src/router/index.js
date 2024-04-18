@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import Home from '../pages/Home.vue'
 import Cart from '../pages/Cart.vue'
-import Favorite from '../pages/Favorite.vue'
+import Favorites from '../pages/Favorites.vue'
 import Contact from '../pages/Contact.vue'
 import GameDetails from '../pages/GameDetails.vue'
 
@@ -18,9 +18,9 @@ const routes = [
       component: Cart
     },
     {
-      path: '/favorite',
-      name: 'Favorite',
-      component: Favorite
+      path: '/favorites',
+      name: 'Favorites',
+      component: Favorites
     },
     {
       path: '/contact',

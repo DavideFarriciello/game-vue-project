@@ -7,8 +7,8 @@
       <div class="space-x-8">
         <router-link :to="{ name: 'Cart' }"
           class="text-xl text-white transition duration-300 ease-in-out hover:text-fuchsia-200 hover:-translate-y-1">Cart</router-link>
-        <router-link :to="{ name: 'Favorite' }"
-          class="text-xl text-white transition duration-300 ease-in-out hover:text-fuchsia-200 hover:-translate-y-1">Favorite</router-link>
+        <router-link :to="{ name: 'Favorites' }"
+          class="text-xl text-white transition duration-300 ease-in-out hover:text-fuchsia-200 hover:-translate-y-1">Favorites</router-link>
         <router-link :to="{ name: 'Contact' }"
           class="text-xl text-white transition duration-300 ease-in-out hover:text-fuchsia-200 hover:-translate-y-1">Contact us</router-link>
       </div>

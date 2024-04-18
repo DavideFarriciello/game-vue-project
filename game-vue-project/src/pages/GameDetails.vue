@@ -14,7 +14,7 @@
           Add to Cart
         </button>
         <i
-        @click.stop="addToFavorite(game)"
+        @click.stop="addToFavorites(game)"
         class="pi pi-heart ml-8 mt-8 text-5xl bg-white-game hover:text-fuchsia-900  hover:-translate-y-1 transition duration-300 ease-in-out hover:cursor-pointer"></i>
         </div>
         <p class="text-xl mb-1 mt-24">Type: {{ game.type }}</p>
@@ -42,6 +42,8 @@ import { useToast } from 'vue-toastification';
 import { inject } from 'vue';
 
 const cartStore = inject('cartStore');
+const favoritesStore = inject('cartStore');
+
 
 const route = useRoute();
 const router = useRouter();
@@ -55,15 +57,22 @@ const otherGames = computed(() => {
 });
 
 const addToCart = (game) => {
-  cartStore.addToCart(game);
-  toast.success(`Added ${game.name} to cart!`, { timeout: 4000 });
+  const added = cartStore.addToCart(game);
+  if (added) {
+    toast.success(`Added ${game.name} to cart!`, { timeout: 4000 });
+  } else {
+    toast.warning(`${game.name} is already in the cart`, { timeout: 4000 });
+  }
 };
 
-const addToFavorite = (game) => {
-  toast.success(`Added ${game.name} to favorite!`, {
-    timeout: 4000
-  });
-}
+const addToFavorites = (game) => {
+  const added = favoritesStore.addToFavorites(game);
+  if (added) {
+    toast.success(`Added ${game.name} to favorites!`, { timeout: 4000 });
+  } else {
+    toast.warning(`${game.name} is already in the favorites`, { timeout: 4000 });
+  }
+};
 
 const showDetails = (selectedGame) => {
   game.value = selectedGame;
