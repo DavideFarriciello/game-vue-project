@@ -8,7 +8,7 @@
       <p class="text-xl text-center my-4">Price: {{ game.price }}€</p>
       <div class="flex flex-row">
         <button @click.stop="addToCart(game)"
-        :class="['bg-slate-950 text-white font-bold py-2 w-32 ml-2 mb-2 rounded-lg shadow hover:-translate-y-1 transition duration-300 ease-in-out', cartIds.has(game.id) ? 'bg-fuchsia-900 hover:bg-slate-950' : 'hover:bg-fuchsia-900 hover:shadow-lg']">
+        :class="['bg-slate-950 text-white font-bold py-2 w-32 ml-2 mb-2 rounded-lg shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out', cartIds.has(game.id) ? '!bg-fuchsia-900' : 'hover:bg-fuchsia-900 ']">
         {{ cartIds.has(game.id) ? 'Added ' : 'Add to Cart' }}
       </button>
       <i

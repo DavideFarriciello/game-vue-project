@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex justify-between items-center bg-gradient-to-r from-fuchsia-900 to-slate-950 h-16 px-10 py-2 shadow-md">
+    <div class="sticky top-0 z-50 flex justify-between items-center bg-gradient-to-r from-fuchsia-900 to-slate-950 h-16 px-10 py-2 shadow-md">
       <router-link :to="{ name: 'Home' }"
         class="text-4xl font-bold text-white transition duration-300 ease-in-out hover:text-fuchsia-200 hover:-translate-y-1">Game Shop</router-link>
       
