@@ -5,10 +5,16 @@ import Cart from '../pages/Cart.vue'
 import Favorites from '../pages/Favorites.vue'
 import Contact from '../pages/Contact.vue'
 import GameDetails from '../pages/GameDetails.vue'
+import Login from '../pages/Login.vue'
 
 const routes = [
     {
       path: '/',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/home',
       name: 'Home',
       component: Home
     },
