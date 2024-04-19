@@ -26,7 +26,7 @@
       Loading Details...
     </div>
     <div>
-      <h2 class="text-4xl mt-20">Other Games</h2>
+      <h2 class="text-4xl mt-20 flex justify-center text-gradient-from-fucsia">Other Games</h2>
       <Game :games="otherGames" @game-clicked="showDetails"/>
     </div>
   </div>
@@ -36,7 +36,7 @@
 <script setup>
 import 'primeicons/primeicons.css'
 import Game from '@/component/Game.vue';
-import { watch, ref, computed } from 'vue';
+import { watch, ref, computed , onMounted} from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
 import { inject, reactive } from 'vue';
@@ -53,8 +53,17 @@ const game = ref(JSON.parse(route.query.game));
 const allGames = ref(JSON.parse(route.query.games));
 const toast = useToast();
 
-const otherGames = computed(() => {
-  return allGames.value.filter(g => g.name !== game.value.name);
+const shuffleAndPickRandomGames = (games, currentGame) => {
+  return games
+    .filter(g => g.id !== currentGame.id) // Exclude current game
+    .sort(() => 0.5 - Math.random()) // Shuffle array
+    .slice(0, 5); // Pick first five
+};
+
+const otherGames = ref([]);
+
+onMounted(() => {
+  otherGames.value = shuffleAndPickRandomGames(allGames.value, game.value);
 });
 
 const addToCart = (game) => {
