@@ -13,7 +13,7 @@
       </button>
       <i
           @click.stop="addToFavorites(game)"
-          :class="['pi pi-heart ml-8 text-4xl bg-white-game hover:-translate-y-1 transition duration-300 ease-in-ou', favoritedIds.has(game.id) ? 'text-fuchsia-900' : 'hover:text-fuchsia-900']">
+          :class="['pi pi-heart ml-8 text-4xl bg-white-game hover:-translate-y-1 transition duration-300 ease-in-out', favoritedIds.has(game.id) ? 'text-fuchsia-900' : 'hover:text-fuchsia-900']">
         </i>
       </div>
     </div>
