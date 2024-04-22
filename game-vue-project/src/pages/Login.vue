@@ -13,10 +13,6 @@
         <input type="password" v-model="user.password" placeholder="Password" class="mb-5 p-4 rounded-lg">
 
         <div v-if="formType === 'Register'">
-          <input type="password" v-model="user.confirmPassword" placeholder="Confirm Password" class="mb-5 p-4 rounded-lg w-full">
-        </div>
-
-        <div v-if="formType === 'Register'">
           <input type="email" v-model="user.email" placeholder="Email" class="mb-3 p-4 rounded-lg w-full">
         </div>
 
@@ -39,20 +35,38 @@
 
 <script setup>
 import { ref } from 'vue';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
+import { store } from '../useCartStore.js'
+
+const router = useRouter();
 
 const formType = ref('Login'); // Toggle between 'Login' and 'Register'
 const user = ref({
   username: '',
   password: '',
-  confirmPassword:'',
   email: ''
 
 });
 
 function handleSubmit() {
-  // Here you would typically handle the form submission to your backend
-  console.log(`Form Type: ${formType.value}`, user.value);
-  alert(`Submitted ${formType.value} Form`);
+  const baseUrl = 'http://localhost:3000';
+  const url = `${baseUrl}${formType.value === 'Login' ? '/login' : '/sign_up'}`;
+
+  axios.post(url, user.value)
+    .then(response => {
+      console.log(response);
+
+      if (formType.value === 'Login' && response.data === 'Login successful') {
+        store.isLoggedIn = true; // Set the login state to true
+        router.push({ name: 'Home' }); // Redirect to Home
+      }
+      
+    })
+    .catch(error => {
+      console.error('Error submitting form:', error);
+      alert(`Failed to submit form: ${error.response.status} - ${error.response.data}`);
+    });
 }
 
 function toggleFormType() {

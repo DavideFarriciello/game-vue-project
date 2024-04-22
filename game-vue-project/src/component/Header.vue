@@ -5,7 +5,7 @@
         class="text-4xl font-bold text-white transition duration-300 ease-in-out hover:text-fuchsia-200 hover:-translate-y-1">Game Shop</router-link>
       
       <div class="space-x-8">
-        <router-link :to="{ name: 'Login' }"
+        <router-link :to="{ name: 'Login' }" @click.prevent="handleLogout"
           class="text-xl text-white transition duration-300 ease-in-out hover:text-fuchsia-200 hover:-translate-y-1">Logout</router-link>
         <router-link :to="{ name: 'Cart' }"
           class="text-xl text-white transition duration-300 ease-in-out hover:text-fuchsia-200 hover:-translate-y-1">Cart</router-link>
@@ -20,5 +20,16 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router';
+import { logout } from '../useCartStore'; // adjust the import path to your state management file
 
+const router = useRouter();
+
+function handleLogout() {
+  // Show a confirmation dialog
+  if (confirm('Are you sure you want to log out?')) {
+    logout(); 
+    router.push('/login'); 
+  }
+}
 </script>

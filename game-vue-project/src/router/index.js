@@ -11,7 +11,8 @@ const routes = [
     {
       path: '/',
       name: 'Login',
-      component: Login
+      component: Login,
+      meta: { requiresGuest: true }
     },
     {
       path: '/home',
@@ -45,5 +46,13 @@ const routes = [
     history: createWebHistory(),
     routes
   })
+
+  router.beforeEach((to, from, next) => {
+    if (to.meta.requiresGuest && store.isLoggedIn) {
+      next({ name: 'Home' }); 
+    } else {
+      next();
+    }
+  });
 
 export default router
