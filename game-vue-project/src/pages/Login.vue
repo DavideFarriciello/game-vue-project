@@ -9,13 +9,13 @@
         <h2 class="text-5xl flex justify-center pb-7 font-bold text-gradient-from-fucsia">{{ formType }}</h2>
 
 
-        <input type="text" v-model="user.username" placeholder="Username" class="mb-5 p-4 rounded-lg ">
+        <input type="text" v-model="user.username" placeholder="Username" class="mb-5 p-4 rounded-lg outline-none">
 
 
-        <input type="password" v-model="user.password" placeholder="Password" class="mb-5 p-4 rounded-lg">
+        <input type="password" v-model="user.password" placeholder="Password" class="mb-5 p-4 rounded-lg outline-none">
 
         <div v-if="formType === 'Register'">
-          <input type="email" v-model="user.email" placeholder="Email" class="mb-3 p-4 rounded-lg w-full">
+          <input type="email" v-model="user.email" placeholder="Email" class="mb-3 p-4 rounded-lg w-full outline-none">
         </div>
 
 
@@ -41,10 +41,12 @@ import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import { store } from '../useCartStore.js'
+import { useToast } from 'vue-toastification';
 
 const router = useRouter();
+const toast = useToast();
 
-const formType = ref('Login'); // Toggle between 'Login' and 'Register'
+const formType = ref('Login');
 const user = ref({
   username: '',
   password: '',
@@ -61,14 +63,20 @@ function handleSubmit() {
       console.log(response);
 
       if (formType.value === 'Login' && response.data === 'Login successful') {
-        store.isLoggedIn = true; // Set the login state to true
-        router.push({ name: 'Home' }); // Redirect to Home
+        store.isLoggedIn = true;
+        router.push({ name: 'Home' });
+      }
+
+      if (formType.value === 'Register' && response.data === 'Signup successful') {
+        store.isLoggedIn = true; 
+        router.push({ name: 'Home' }); 
+        alert('Your account has been successfully registered.');
       }
       
     })
     .catch(error => {
       console.error('Error submitting form:', error);
-      alert(`Failed to submit form: ${error.response.status} - ${error.response.data}`);
+      toast.warning(`${error.response.data}`, { timeout: 4000 });
     });
 }
 
