@@ -1,20 +1,26 @@
 <template>
+  <div>
+    <div class="flex justify-center">
+      <input type="text" placeholder="Search games"
+      class="text-xl pl-5 py-2 mt-5 w-96 rounded-full shadow-2xl hover-shadow-red transition-all duration-300 ease-in-out hover:scale-105 outline-none"
+        v-model="search">
+    </div>
+    <div class="flex flex-wrap justify-center p-5">
 
-  <div class="flex flex-wrap justify-center p-5">
-    <div v-for="game in games" :key="game" @click="showDetails(game)"
-      class="bg-white-game rounded-lg w-64 ml-7 mb-20 shadow-2xl hover-shadow-red transition-all duration-300 ease-in-out hover:scale-105 hover:cursor-pointer">
-      <img :src="game.image" :alt="game.name" class="pt-1 px-1">
-      <h2 class="text-xl text-center my-4">{{ formatName(game.name) }}</h2>
-      <p class="text-xl text-center my-4">Price: {{ game.price }}€</p>
-      <div class="flex flex-row">
-        <button @click.stop="addToCart(game)"
-        :class="['bg-slate-950 text-white font-bold py-2 w-32 ml-2 mb-2 rounded-lg shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out', cartIds.has(game.id) ? '!bg-fuchsia-900' : 'hover:bg-fuchsia-900 ']">
-        {{ cartIds.has(game.id) ? 'Added ' : 'Add to Cart' }}
-      </button>
-      <i
-          @click.stop="addToFavorites(game)"
-          :class="['pi pi-heart ml-8 text-4xl bg-white-game hover:-translate-y-1 transition duration-300 ease-in-out', favoritedIds.has(game.id) ? 'text-fuchsia-900' : 'hover:text-fuchsia-900']">
-        </i>
+      <div v-for="game in filteredGames" :key="game.id" @click="showDetails(game)"
+        class="bg-white-game rounded-lg w-64 ml-7 mb-20 shadow-2xl hover-shadow-red transition-all duration-300 ease-in-out hover:scale-105 hover:cursor-pointer">
+        <img :src="game.image" :alt="game.name" class="pt-1 px-1">
+        <h2 class="text-xl text-center my-4">{{ formatName(game.name) }}</h2>
+        <p class="text-xl text-center my-4">Price: {{ game.price }}€</p>
+        <div class="flex flex-row">
+          <button @click.stop="addToCart(game)"
+            :class="['bg-slate-950 text-white font-bold py-2 w-32 ml-2 mb-2 rounded-lg shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out', cartIds.has(game.id) ? '!bg-fuchsia-900' : 'hover:bg-fuchsia-900 ']">
+            {{ cartIds.has(game.id) ? 'Added ' : 'Add to Cart' }}
+          </button>
+          <i @click.stop="addToFavorites(game)"
+            :class="['pi pi-heart ml-8 text-4xl bg-white-game hover:-translate-y-1 transition duration-300 ease-in-out', favoritedIds.has(game.id) ? 'text-fuchsia-900' : 'hover:text-fuchsia-900']">
+          </i>
+        </div>
       </div>
     </div>
   </div>
@@ -25,10 +31,16 @@
 import 'primeicons/primeicons.css'
 import { useToast } from 'vue-toastification';
 import { useRouter } from 'vue-router'
-import { inject, reactive } from 'vue';
+import { inject, reactive, computed, ref } from 'vue';
 
 const props = defineProps({
   games: Array
+});
+
+const search = ref('');
+const filteredGames = computed(() => {
+  // Make sure to reference the games from props
+  return props.games.filter(game => game.name.toLowerCase().includes(search.value.toLowerCase()));
 });
 
 const toast = useToast();
@@ -71,4 +83,5 @@ const showDetails = (game) => {
 const formatName = (name) => {
   return name.length > 23 ? `${name.substring(0, 20)}...` : name;
 };
+
 </script>
