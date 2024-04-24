@@ -2,9 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-#app{
+
+
+
+
+body{
   font-family: Avenir, Arial, Helvetica, sans-serif;
-  
 }
 
 .hover-shadow-red:hover {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="text-5xl flex justify-center mt-10 font-bold text-gradient-from-fucsia">Favorites</h2>
+    <h2 class="text-5xl flex justify-center mt-10 font-bold text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">Favorites</h2>
     <div v-if="favoritesStore.favorites.length > 0" class="flex flex-wrap justify-center">
       <div v-for="item in favoritesStore.favorites" :key="item.id" >
         <div
@@ -19,7 +19,7 @@
       </div>
     </div>
     <div v-else>
-      <h2 class="text-5xl flex justify-center mt-8 pb-2 text-gradient-from-fucsia">Any item is being added to the favorites</h2>
+      <h2 class="text-5xl flex justify-center mt-8 pb-2 text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">Any item is being added to the favorites</h2>
     </div>
   </div>
 </template>
