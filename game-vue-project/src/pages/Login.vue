@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1
-      class="mt-16 text-7xl flex justify-center pb-7 font-bold text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">
+      class="mt-16 text-7xl flex justify-center pb-7 font-bold text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ">
       Welcome</h1>
     <div class="flex flex-wrap justify-center p-5">
       <div
