@@ -26,6 +26,15 @@
       Loading Details...
     </div>
     <div>
+      <h2 class="text-4xl mt-20 mb-10 flex justify-center text-gradient-from-fucsia">Gallery</h2>
+      <div class="flex flex-row gap-3">
+      <img :src="game.pic1" class="w-96 h-fit rounded-md hover-shadow-red transition-all duration-300 ease-in-out hover:scale-150">
+      <img :src="game.pic2" class="w-96 h-fit rounded-md hover-shadow-red transition-all duration-300 ease-in-out hover:scale-150">
+      <img :src="game.pic3" class="w-96 h-fit rounded-md hover-shadow-red transition-all duration-300 ease-in-out hover:scale-150">
+      <img :src="game.pic4" class="w-96 h-fit rounded-md hover-shadow-red transition-all duration-75 ease-in-out hover:scale-150">
+    </div>
+    </div>
+    <div>
       <h2 class="text-4xl mt-20 flex justify-center text-gradient-from-fucsia">Other Games</h2>
       <Game :games="otherGames" @game-clicked="showDetails"/>
     </div>
