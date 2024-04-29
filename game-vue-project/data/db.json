@@ -100,10 +100,10 @@
       "type": "Action",
       "dateGame": "18/02/2022",
       "pegi": "recommended age 16 and over",
-      "pic1": "https://cdn.cloudflare.steamstatic.com/steam/apps/…0fb92735397945bd8732bba53.116x65.jpg?t=1711473066",
-      "pic2": "https://cdn.cloudflare.steamstatic.com/steam/apps/…3651dc9dbea42dbeca5f5f196.116x65.jpg?t=1711473066",
-      "pic3": "https://cdn.cloudflare.steamstatic.com/steam/apps/…d1ffef7aaab40a9f46d970d99.116x65.jpg?t=1711473066",
-      "pic4": "https://cdn.cloudflare.steamstatic.com/steam/apps/…bc7310c64e1a5c3f44b8e6a7b.116x65.jpg?t=1711473066"
+      "pic1": "public/gallery/horizon-pic1.jpg",
+      "pic2": "public/gallery/horizon-pic2.jpg",
+      "pic3": "public/gallery/horizon-pic3.jpg",
+      "pic4": "public/gallery/horizon-pic4.jpg"
     },
     {
       "id": 8,
@@ -115,10 +115,10 @@
       "type": "Action",
       "dateGame": "20/08/2021",
       "pegi": "recommended age 18 and over",
-      "pic1": "https://cdn.akamai.steamstatic.com/steam/apps/2215…f0a68ae5d743a5cad919d3d17.116x65.jpg?t=1714170012",
-      "pic2": "https://cdn.akamai.steamstatic.com/steam/apps/2215…078b1898f0795c68615d29b2a.116x65.jpg?t=1714170012",
-      "pic3": "https://cdn.akamai.steamstatic.com/steam/apps/2215…3636cd7c7c08342a04523f2f0.116x65.jpg?t=1714170012",
-      "pic4": "https://cdn.akamai.steamstatic.com/steam/apps/2215…bd5ad74d7a1a4346f9350cc3b.116x65.jpg?t=1714170012"
+      "pic1": "public/gallery/ghost-pic1.jpg",
+      "pic2": "public/gallery/ghost-pic2.jpg",
+      "pic3": "public/gallery/ghost-pic3.jpg",
+      "pic4": "public/gallery/ghost-pic4.jpg"
     },
     {
       "id": 9,
@@ -130,10 +130,10 @@
       "type": "Action",
       "dateGame": "31/12/2024",
       "pegi": "recommended age 18 and over",
-      "pic1": "https://cdn.cloudflare.steamstatic.com/steam/apps/…df1bc6e561ebcd9bb3eeb4bad.116x65.jpg?t=1713509203",
-      "pic2": "https://cdn.cloudflare.steamstatic.com/steam/apps/…bef9e408ab81b194815661ded.116x65.jpg?t=1713509203",
-      "pic3": "https://cdn.cloudflare.steamstatic.com/steam/apps/…c576e3672a013b958de1b0158.116x65.jpg?t=1713509203",
-      "pic4": "https://cdn.cloudflare.steamstatic.com/steam/apps/…20bf232511605111bd6548b6f.116x65.jpg?t=1713509203"
+      "pic1": "public/gallery/silent-pic1.jpg",
+      "pic2": "public/gallery/silent-pic2.jpg",
+      "pic3": "public/gallery/silent-pic3.jpg",
+      "pic4": "public/gallery/silent-pic4.jpg"
     },
     {
       "id": 10,
@@ -145,10 +145,10 @@
       "type": "Action",
       "dateGame": "20/03/2024",
       "pegi": "recommended age 18 and over",
-      "pic1": "https://cdn.cloudflare.steamstatic.com/steam/apps/…fd11d814e891819ba773985ff.116x65.jpg?t=1711546287",
-      "pic2": "https://cdn.cloudflare.steamstatic.com/steam/apps/…ac69fb6859208206a7cb684df.116x65.jpg?t=1711546287",
-      "pic3": "https://cdn.cloudflare.steamstatic.com/steam/apps/…540f854e70fa26c898995647a.116x65.jpg?t=1711546287",
-      "pic4": "https://cdn.cloudflare.steamstatic.com/steam/apps/…4756e932ddb372bdaf5e3444f.116x65.jpg?t=1711546287"
+      "pic1": "public/gallery/alone-pic1.jpg",
+      "pic2": "public/gallery/alone-pic2.jpg",
+      "pic3": "public/gallery/alone-pic3.jpg",
+      "pic4": "public/gallery/alone-pic4.jpg"
     },
     {
       "id": 11,
@@ -160,10 +160,10 @@
       "type": "Action",
       "dateGame": " 10/11/2023",
       "pegi": "recommended age 18 and over",
-      "pic1": "https://cdn.cloudflare.steamstatic.com/steam/apps/…3a14a466049835bfbb98a3ebf.116x65.jpg?t=1713202728",
-      "pic2": "https://cdn.cloudflare.steamstatic.com/steam/apps/…d1571589faaa9db8ef3ff6a22.116x65.jpg?t=1713202728",
-      "pic3": "https://cdn.cloudflare.steamstatic.com/steam/apps/…60dfafa25141d8e5101d263c5.116x65.jpg?t=1713202728",
-      "pic4": "https://cdn.cloudflare.steamstatic.com/steam/apps/…b4437944e59e0da20671d035e.116x65.jpg?t=1713202728"
+      "pic1": "public/gallery/warfare-pic1.jpg",
+      "pic2": "public/gallery/warfare-pic2.jpg",
+      "pic3": "public/gallery/warfare-pic3.jpg",
+      "pic4": "public/gallery/warfare-pic4.jpg"
     },
     {
       "id": 12,
@@ -175,10 +175,10 @@
       "type": "Action",
       "dateGame": "13/10/2023",
       "pegi": "recommended age 18 and over",
-      "pic1": "https://cdn.cloudflare.steamstatic.com/steam/apps/…d964613b934d5428ea2857419.116x65.jpg?t=1713957348",
-      "pic2": "https://cdn.cloudflare.steamstatic.com/steam/apps/…f1c3d8590412d19f111d6a3ed.116x65.jpg?t=1713957348",
-      "pic3": "https://cdn.cloudflare.steamstatic.com/steam/apps/…484de41995a944f1c1a0cb3f2.116x65.jpg?t=1713957348",
-      "pic4": "https://cdn.cloudflare.steamstatic.com/steam/apps/…408b9b5769be260ff12f44fae.116x65.jpg?t=1713957348"
+      "pic1": "public/gallery/lords-pic1.jpg",
+      "pic2": "public/gallery/lords-pic2.jpg",
+      "pic3": "public/gallery/lords-pic3.jpg",
+      "pic4": "public/gallery/lords-pic4.jpg"
     },
     {
       "id": 13,
@@ -190,10 +190,10 @@
       "type": "Action",
       "dateGame": "16/02/2024",
       "pegi": "recommended age 18 and over",
-      "pic1": "https://store.ubisoft.com/dw/image/v2/ABBS_PRD/on/…95077a27efc536e38350a0-1.jpg?sw=500&sh=270&sm=fit",
-      "pic2": "https://store.ubisoft.com/dw/image/v2/ABBS_PRD/on/…95077a27efc536e38350a0-8.jpg?sw=500&sh=270&sm=fit",
-      "pic3": "https://store.ubisoft.com/dw/image/v2/ABBS_PRD/on/…95077a27efc536e38350a0-2.jpg?sw=500&sh=270&sm=fit",
-      "pic4": "https://store.ubisoft.com/dw/image/v2/ABBS_PRD/on/…95077a27efc536e38350a0-3.jpg?sw=500&sh=270&sm=fit"
+      "pic1": "public/gallery/skull-pic1.jpeg",
+      "pic2": "public/gallery/skull-pic2.jpeg",
+      "pic3": "public/gallery/skull-pic3.jpeg",
+      "pic4": "public/gallery/skull-pic4.jpeg"
     },
     {
       "id": 14,
@@ -205,10 +205,10 @@
       "type": "Action",
       "dateGame": "20/10/2023",
       "pegi": "recommended age 16 and over",
-      "pic1": "https://static-it.gamestop.it/images/products/309169/5scrmax1.jpg",
-      "pic2": "https://static-it.gamestop.it/images/products/309169/7scrmax2.jpg",
-      "pic3": "https://static-it.gamestop.it/images/products/309169/9scrmax3.jpg",
-      "pic4": "https://static-it.gamestop.it/images/products/309169/13scrmax5.jpg"
+      "pic1": "public/gallery/spiderman-pic1.jpeg",
+      "pic2": "public/gallery/spiderman-pic2.jpeg",
+      "pic3": "public/gallery/spiderman-pic3.jpeg",
+      "pic4": "public/gallery/spiderman-pic4.jpeg"
     },
     {
       "id": 16,
@@ -220,10 +220,10 @@
       "type": "Action",
       "dateGame": " 26/03/2024",
       "pegi": "recommended age 16 and over",
-      "pic1": "https://southpark.thqnordic.com/_next/image?url=%2…tent%2Fscreenshots%2Fscreenshot-01.jpg&w=640&q=75",
-      "pic2": "https://southpark.thqnordic.com/_next/image?url=%2…tent%2Fscreenshots%2Fscreenshot-02.jpg&w=640&q=75",
-      "pic3": "https://southpark.thqnordic.com/_next/image?url=%2…tent%2Fscreenshots%2Fscreenshot-03.png&w=640&q=75",
-      "pic4": "https://southpark.thqnordic.com/_next/image?url=%2…tent%2Fscreenshots%2Fscreenshot-04.png&w=640&q=75"
+      "pic1": "public/gallery/snow-pic1.webp",
+      "pic2": "public/gallery/snow-pic2.webp",
+      "pic3": "public/gallery/snow-pic3.webp",
+      "pic4": "public/gallery/snow-pic4.webp"
     },
     {
       "id": 17,
@@ -235,10 +235,10 @@
       "type": "Action",
       "dateGame": "18/01/2024",
       "pegi": "recommended age 16 and over",
-      "pic1": "https://static-it.gamestop.it/images/products/314852/7scrmax2.jpg",
-      "pic2": "https://static-it.gamestop.it/images/products/314852/9scrmax3.jpg",
-      "pic3": "https://static-it.gamestop.it/images/products/314852/11scrmax4.jpg",
-      "pic4": "https://static-it.gamestop.it/images/products/314852/13scrmax5.jpg"
+      "pic1": "public/gallery/prince-pic1.jpeg",
+      "pic2": "public/gallery/prince-pic2.jpeg",
+      "pic3": "public/gallery/prince-pic3.jpeg",
+      "pic4": "public/gallery/prince-pic4.jpeg"
     },
     {
       "id": 18,
@@ -250,10 +250,10 @@
       "type": "Action",
       "dateGame": "31/12/2024",
       "pegi": "recommended age 16 and over",
-      "pic1": "https://cdn.akamai.steamstatic.com/steam/apps/1299…e512c45e20093184e6348d3b3.116x65.jpg?t=1714055082",
-      "pic2": "https://cdn.akamai.steamstatic.com/steam/apps/1299…2262150736a7991244294ddd7.116x65.jpg?t=1714055082",
-      "pic3": "https://cdn.akamai.steamstatic.com/steam/apps/1299…3c93292da1eec100a5704fe86.116x65.jpg?t=1714055082",
-      "pic4": "https://cdn.akamai.steamstatic.com/steam/apps/1299…4ccc375bda96add6e07e52220.116x65.jpg?t=1714055082"
+      "pic1": "public/gallery/gori-pic1.jpg",
+      "pic2": "public/gallery/gori-pic2.jpg",
+      "pic3": "public/gallery/gori-pic3.jpg",
+      "pic4": "public/gallery/gori-pic4.jpg"
     }
   ]
 }

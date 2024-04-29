@@ -9,13 +9,12 @@
         <h2 class="text-xl">{{ game.console }}</h2>
         <h2 class="text-3xl mt-12">Price: {{ game.price }}€</h2>
         <div class="flex flex-row">
-        <button @click.stop="addToCart(game)"
-        :class="['bg-slate-950 text-white font-bold text-xl w-52 py-6 ml-2 mt-5 rounded-3xl shadow hover:bg-fuchsia-900 hover:shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out', cartIds.has(game.id) ? '!bg-fuchsia-900' : 'hover:bg-fuchsia-900 hover:shadow-lg']">
-        {{ cartIds.has(game.id) ? 'Added ' : 'Add to Cart' }}
-      </button>
-        <i
-        @click.stop="addToFavorites(game)"
-        :class="['pi pi-heart ml-8 mt-8 text-5xl bg-white-game hover:-translate-y-1 transition duration-300 ease-in-out hover:cursor-pointer',favoritedIds.has(game.id) ? 'text-fuchsia-900' : 'hover:text-fuchsia-900']"></i>
+          <button @click.stop="addToCart(game)"
+            :class="['bg-slate-950 text-white font-bold text-xl w-52 py-6 ml-2 mt-5 rounded-3xl shadow hover:bg-fuchsia-900 hover:shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out', cartIds.has(game.id) ? '!bg-fuchsia-900' : 'hover:bg-fuchsia-900 hover:shadow-lg']">
+            {{ cartIds.has(game.id) ? 'Added ' : 'Add to Cart' }}
+          </button>
+          <i @click.stop="addToFavorites(game)"
+            :class="['pi pi-heart ml-8 mt-8 text-5xl bg-white-game hover:-translate-y-1 transition duration-300 ease-in-out hover:cursor-pointer', favoritedIds.has(game.id) ? 'text-fuchsia-900' : 'hover:text-fuchsia-900']"></i>
         </div>
         <p class="text-xl mb-1 mt-24">Type: {{ game.type }}</p>
         <p class="text-xl mb-1">Date: {{ game.dateGame }}</p>
@@ -27,16 +26,24 @@
     </div>
     <div>
       <h2 class="text-4xl mt-20 mb-10 flex justify-center text-gradient-from-fucsia">Gallery</h2>
-      <div class="flex flex-row gap-3">
-      <img :src="game.pic1" class="w-96 h-fit rounded-md hover-shadow-red transition-all duration-300 ease-in-out hover:scale-150">
-      <img :src="game.pic2" class="w-96 h-fit rounded-md hover-shadow-red transition-all duration-300 ease-in-out hover:scale-150">
-      <img :src="game.pic3" class="w-96 h-fit rounded-md hover-shadow-red transition-all duration-300 ease-in-out hover:scale-150">
-      <img :src="game.pic4" class="w-96 h-fit rounded-md hover-shadow-red transition-all duration-75 ease-in-out hover:scale-150">
-    </div>
+      <div class="flex flex-col gap-10">
+        <div class="flex flex-row gap-16">
+          <img :src="game.pic1"
+            class="h-fit w-96 rounded-md hover-shadow-red transition-all duration-300 ease-in-out hover:scale-150">
+          <img :src="game.pic2"
+            class="w-96 h-fit rounded-md hover-shadow-red transition-all duration-300 ease-in-out hover:scale-150">
+        </div>
+        <div class="flex flex-row gap-16">
+          <img :src="game.pic3"
+            class="w-96 h-fit rounded-md hover-shadow-red transition-all duration-300 ease-in-out hover:scale-150">
+          <img :src="game.pic4"
+            class="w-96 h-fit rounded-md hover-shadow-red transition-all duration-75 ease-in-out hover:scale-150">
+        </div>
+      </div>
     </div>
     <div>
       <h2 class="text-4xl mt-20 flex justify-center text-gradient-from-fucsia">Other Games</h2>
-      <Game :games="otherGames" @game-clicked="showDetails"/>
+      <Game :games="otherGames" @game-clicked="showDetails" />
     </div>
   </div>
 </template>
@@ -45,7 +52,7 @@
 <script setup>
 import 'primeicons/primeicons.css'
 import Game from '@/component/Game.vue';
-import { watch, ref, computed , onMounted} from 'vue';
+import { watch, ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
 import { inject, reactive } from 'vue';
