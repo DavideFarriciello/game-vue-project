@@ -29,15 +29,15 @@
       <div class="flex flex-col gap-10">
         <div class="flex flex-row gap-16">
           <img :src="game.pic1"
-            class="h-fit w-96 rounded-md hover-shadow-red transition-all duration-300 ease-in-out hover:scale-150">
+            class="h-fit w-96 rounded-md hover-shadow-red shadow-2xl transition-all duration-300 ease-in-out hover:scale-150">
           <img :src="game.pic2"
-            class="w-96 h-fit rounded-md hover-shadow-red transition-all duration-300 ease-in-out hover:scale-150">
+            class="w-96 h-fit rounded-md hover-shadow-red shadow-2xl transition-all duration-300 ease-in-out hover:scale-150">
         </div>
         <div class="flex flex-row gap-16">
           <img :src="game.pic3"
-            class="w-96 h-fit rounded-md hover-shadow-red transition-all duration-300 ease-in-out hover:scale-150">
+            class="w-96 h-fit rounded-md hover-shadow-red shadow-2xl transition-all duration-300 ease-in-out hover:scale-150">
           <img :src="game.pic4"
-            class="w-96 h-fit rounded-md hover-shadow-red transition-all duration-75 ease-in-out hover:scale-150">
+            class="w-96 h-fit rounded-md hover-shadow-red shadow-2xl transition-all duration-75 ease-in-out hover:scale-150">
         </div>
       </div>
     </div>
