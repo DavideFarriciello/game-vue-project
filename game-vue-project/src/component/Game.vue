@@ -2,7 +2,7 @@
   <div>
     <div class="flex justify-center">
       <input v-if="isHome" type="text" placeholder="Search games"
-      class="text-xl pl-5 py-2 mt-5 w-96 rounded-full shadow-2xl hover-shadow-red transition-all duration-300 ease-in-out hover:scale-105 outline-none xs:w-72 xs:text-base"
+      class="lg:text-xl pl-5 py-2 mt-5 lg:w-96 rounded-full shadow-2xl hover-shadow-red transition-all duration-300 ease-in-out hover:scale-105 outline-none xs:w-72 xs:text-base"
         v-model="search">
     </div>
     <div class="flex flex-wrap justify-center p-5">
