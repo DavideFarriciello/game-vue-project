@@ -4,6 +4,11 @@ export default {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      transitionProperty: {
+        'height': 'height',
+        'spacing': 'margin, padding',
+        'transform': 'transform'
+      },
       colors: {
 
       },
@@ -13,7 +18,7 @@ export default {
     },
     screens: {
       'xs':'340px',
-      'lg':'850px',
+      'lg':'1024px',
     }
 
   },

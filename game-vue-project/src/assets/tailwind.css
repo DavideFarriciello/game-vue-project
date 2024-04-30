@@ -30,4 +30,13 @@ body{
   background-clip: text;
 }
 
+.text-gradient-from-white {
+  background: linear-gradient(to right, #fff, #702459); /* Fuchsia 900 to Slate 950 */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+
+
 
