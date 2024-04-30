@@ -19,7 +19,7 @@
       </div>
     </div>
     <div v-else>
-      <h2 class="text-5xl flex justify-center mt-8 pb-2 text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">Any item is being added to the favorites</h2>
+      <h2 class="lg:text-5xl xs:text-3xl flex justify-center mt-8 pb-2 xs:px-2 text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">Any item is being added to the favorites</h2>
     </div>
   </div>
 </template>

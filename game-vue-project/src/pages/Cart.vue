@@ -4,7 +4,7 @@
     <div v-if="cartStore.cart.length > 0">
       <div v-for="item in cartStore.cart" :key="item.id">
         <div
-          class="flex flex-row space-x-4 bg-white-game lg:mt-8 xs:mt-3 pt-2 p-4 lg:mx-24 xs:mx-1 rounded-lg shadow-2xl hover-shadow-red transition-all duration-300 ease-in-out hover:scale-105 lg:w-[90%] xs:w-[97%] h-[150px] ">
+          class="flex flex-row space-x-4 bg-white-game lg:mt-8 xs:mt-3 pt-2 p-4 lg:mx-20 xs:mx-1 rounded-lg shadow-2xl hover-shadow-red transition-all duration-300 ease-in-out hover:scale-105 lg:w-[90%] xs:w-[97%] h-[150px] ">
           <img :src="item.image" :alt="item.name" class="rounded-md ">
           <div class="flex flex-col pl-6 mt-4">
             <h2 class="lg:text-4xl xs:text-xl font-bold lg:mb-3 xs:mb-1">{{ item.name }}</h2>
@@ -17,8 +17,8 @@
           </div>
         </div>
       </div>
-      <div class="flex flex-col lg:float-end float-start   my-12 p-3 lg:mr-24 xs:mr-1">
-        <h2 class="text-3xl mb-5 ml-44">Sub Total: {{ totalPrice }}€</h2>
+      <div class="flex flex-col lg:float-end xs:float-end my-12 p-3 lg:mr-24 xs:mr-1">
+        <h2 class="lg:text-3xl xs:text-xl mb-5 ml-44">Sub Total: {{ totalPrice }}€</h2>
         <div class="relative flex items-center">
           <i class="pi pi-info-circle text-3xl left-32 bottom-3 hover:-translate-y-1 transition-all duration-300 ease-in-out hover:text-fuchsia-900 relative"
             @mouseover="showTooltip = true" @mouseleave="showTooltip = false">
@@ -27,7 +27,7 @@
             class="absolute lg:bottom-16 xs:bottom-20 lg:mr-60 xs:mr-52 text-xl bg-white-game rounded px-2 py-1 transition-all duration-300 ease-in-out">
             Free shipping if you spend more than €50.
           </span>
-          <h2 class="text-3xl mb-5 pl-36">Shipping: {{ shippingCost }}€</h2>
+          <h2 class="lg:text-3xl xs:text-xl mb-5 pl-36">Shipping: {{ shippingCost }}€</h2>
         </div>
         <h2 class="text-4xl font-bold mb-5 ml-44">Total: {{ finalTotal }}€</h2>
         <button
@@ -36,7 +36,7 @@
       </div>
     </div>
     <div v-else>
-      <h2 class="text-5xl flex justify-center mt-10 pb-2 text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">Any item is being added to the cart
+      <h2 class="lg:text-5xl xs:text-3xl flex justify-center mt-10 pb-2 xs:px-2 lg:px-0 text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">Any item is being added to the cart
       </h2>
     </div>
   </div>
