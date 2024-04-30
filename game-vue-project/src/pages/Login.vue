@@ -1,11 +1,11 @@
 <template>
   <div>
     <h1
-      class="mt-16 text-7xl flex justify-center pb-7 font-bold text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">
+      class="mt-8 text-7xl flex justify-center pb-7 font-bold text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">
       Welcome</h1>
-    <div class="flex flex-wrap justify-center p-5">
+    <div class="flex justify-center md:p-5">
       <div
-        class="bg-white-game rounded-lg w-[40%] h-[520px] mt-10 shadow-2xl transition-all duration-300 ease-in-out hover:scale-105 hover-shadow-red">
+        class="bg-white-game rounded-lg lg:w-[40%] h-[480px] mt-7 shadow-2xl transition-all duration-300 ease-in-out hover:scale-105 hover-shadow-red">
 
         <form @submit.prevent="handleSubmit" class="flex flex-col p-4">
           <h2 class="text-5xl flex justify-center pb-7 font-bold text-gradient-from-fucsia">{{ formType }}</h2>

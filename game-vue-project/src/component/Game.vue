@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="flex justify-center">
-      <input type="text" placeholder="Search games"
-      class="text-xl pl-5 py-2 mt-5 w-96 rounded-full shadow-2xl hover-shadow-red transition-all duration-300 ease-in-out hover:scale-105 outline-none"
+      <input v-if="isHome" type="text" placeholder="Search games"
+      class="text-xl pl-5 py-2 mt-5 w-96 rounded-full shadow-2xl hover-shadow-red transition-all duration-300 ease-in-out hover:scale-105 outline-none xs:w-72 xs:text-base"
         v-model="search">
     </div>
     <div class="flex flex-wrap justify-center p-5">
@@ -31,7 +31,7 @@
 import 'primeicons/primeicons.css'
 import { useToast } from 'vue-toastification';
 import { useRouter } from 'vue-router'
-import { inject, reactive, computed, ref } from 'vue';
+import { inject, reactive, computed, ref, watch } from 'vue';
 
 const props = defineProps({
   games: Array
@@ -39,7 +39,6 @@ const props = defineProps({
 
 const search = ref('');
 const filteredGames = computed(() => {
-  // Make sure to reference the games from props
   return props.games.filter(game => game.name.toLowerCase().includes(search.value.toLowerCase()));
 });
 
@@ -60,8 +59,6 @@ const addToCart = (game) => {
   }
 };
 
-
-
 const addToFavorites = (game) => {
   const added = cartStore.addToFavorites(game);
   if (added) {
@@ -80,8 +77,15 @@ const showDetails = (game) => {
   router.push({ name: 'GameDetails', query: { game: gameParam, games: gamesParam } });
 }
 
+//format the name is the lenght is over 23
 const formatName = (name) => {
   return name.length > 23 ? `${name.substring(0, 20)}...` : name;
 };
+
+//to show the search input only if the url is /home
+const isHome = computed(() => {
+  return router.currentRoute.value.path === '/home';
+});
+
 
 </script>
