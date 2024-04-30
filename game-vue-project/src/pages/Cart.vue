@@ -1,30 +1,30 @@
 <template>
   <div>
-    <h2 class="text-5xl flex justify-center mt-10 font-bold text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">Cart</h2>
+    <h2 class="lg:text-5xl xs:text-3xl flex justify-center lg:mt-10 xs:mt-3 font-bold text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">Cart</h2>
     <div v-if="cartStore.cart.length > 0">
       <div v-for="item in cartStore.cart" :key="item.id">
         <div
-          class="flex flex-row space-x-4 bg-white-game mt-8 pt-2 p-4 mx-24 rounded-lg shadow-2xl hover-shadow-red transition-all duration-300 ease-in-out hover:scale-105 w-[90%] h-[150px] ">
+          class="flex flex-row space-x-4 bg-white-game lg:mt-8 xs:mt-3 pt-2 p-4 lg:mx-24 xs:mx-1 rounded-lg shadow-2xl hover-shadow-red transition-all duration-300 ease-in-out hover:scale-105 lg:w-[90%] xs:w-[97%] h-[150px] ">
           <img :src="item.image" :alt="item.name" class="rounded-md ">
           <div class="flex flex-col pl-6 mt-4">
-            <h2 class="text-4xl font-bold mb-3">{{ item.name }}</h2>
+            <h2 class="lg:text-4xl xs:text-xl font-bold lg:mb-3 xs:mb-1">{{ item.name }}</h2>
             <div class="flex flex-row">
-              <h2 class="text-3xl mt-5">Price: {{ item.price }}€</h2>
+              <h2 class="lg:text-3xl xs:text-xl lg:mt-5 xs:mt-2">Price: {{ item.price }}€</h2>
               <button @click="removeFromCart(item.id)"
-                class="bg-slate-950 text-white font-bold h-14 px-4 ml-6 mt-3 rounded-lg shadow hover:bg-fuchsia-900 hover:shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out">
+                class="bg-slate-950 text-white font-bold lg:h-14 xs:h-11 px-4 ml-6 mt-3 rounded-lg shadow hover:bg-fuchsia-900 hover:shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out">
                 Remove</button>
             </div>
           </div>
         </div>
       </div>
-      <div class="flex flex-col float-end my-12 p-3 mr-24">
+      <div class="flex flex-col lg:float-end float-start   my-12 p-3 lg:mr-24 xs:mr-1">
         <h2 class="text-3xl mb-5 ml-44">Sub Total: {{ totalPrice }}€</h2>
         <div class="relative flex items-center">
           <i class="pi pi-info-circle text-3xl left-32 bottom-3 hover:-translate-y-1 transition-all duration-300 ease-in-out hover:text-fuchsia-900 relative"
             @mouseover="showTooltip = true" @mouseleave="showTooltip = false">
           </i>
           <span v-if="showTooltip"
-            class="absolute bottom-16 mr-60 text-xl bg-white-game rounded px-2 py-1 transition-all duration-300 ease-in-out">
+            class="absolute lg:bottom-16 xs:bottom-20 lg:mr-60 xs:mr-52 text-xl bg-white-game rounded px-2 py-1 transition-all duration-300 ease-in-out">
             Free shipping if you spend more than €50.
           </span>
           <h2 class="text-3xl mb-5 pl-36">Shipping: {{ shippingCost }}€</h2>
