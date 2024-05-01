@@ -31,7 +31,7 @@
 import 'primeicons/primeicons.css'
 import { useToast } from 'vue-toastification';
 import { useRouter } from 'vue-router'
-import { inject, reactive, computed, ref, watch } from 'vue';
+import { inject, reactive, computed, ref, watch ,onMounted} from 'vue';
 
 const props = defineProps({
   games: Array
@@ -77,8 +77,25 @@ const addToFavorites = (game) => {
 const router = useRouter();
 
 const showDetails = (game) => {
-  router.push({ name: 'GameDetails', params: { gameId: game.id } });
-}
+  if (game && game.id) {
+    try {
+      const gameParam = JSON.stringify(game);
+      router.push({
+        name: 'GameDetails',
+        params: { gameId: game.id },
+        query: { game: gameParam }
+      });
+    } catch (error) {
+      console.error('Error serializing game data:', error);
+    }
+  } else {
+    console.error('Invalid game data or missing game ID');
+  }
+};
+
+onMounted(() => {
+  console.log("Games received in Game component:", props.games);
+});
 
 //format the name is the lenght is over 23
 const formatName = (name) => {

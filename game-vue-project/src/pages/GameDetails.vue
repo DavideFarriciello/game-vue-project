@@ -25,7 +25,9 @@
       Loading Details...
     </div>
     <div>
-      <h2 class="lg:text-4xl xs:text-2xl lg:mt-20 xs:mt-4 xs:mb-2 lg:mb-10 flex justify-center text-gradient-from-fucsia">Gallery</h2>
+      <h2
+        class="lg:text-4xl xs:text-2xl lg:mt-20 xs:mt-4 xs:mb-2 lg:mb-10 flex justify-center text-gradient-from-fucsia">
+        Gallery</h2>
       <div class="flex flex-col lg:gap-10 xs:gap-3">
         <div class="flex lg:flex-row xs:flex-col lg:gap-16 xs:gap-3">
           <img :src="game.pic1"
@@ -42,7 +44,8 @@
       </div>
     </div>
     <div>
-      <h2 class="lg:text-4xl xs:text-2xl lg:mt-20 xs:mt-5 flex justify-center text-gradient-from-fucsia">Other Games</h2>
+      <h2 class="lg:text-4xl xs:text-2xl lg:mt-20 xs:mt-5 flex justify-center text-gradient-from-fucsia">Other Games
+      </h2>
       <Game :games="otherGames" @game-clicked="showDetails" />
     </div>
   </div>
@@ -57,16 +60,31 @@ import { useRoute, useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
 import { inject, reactive } from 'vue';
 
+
 const cartStore = inject('cartStore');
 const cartIds = reactive(new Set(cartStore.cart.map(item => item.id)));
 const favoritedIds = reactive(new Set(cartStore.favorites.map(item => item.id)));
 
 
-const route = useRoute();
 const router = useRouter();
 
-const game = ref(JSON.parse(route.query.game));
-const allGames = ref(JSON.parse(route.query.games));
+const route = useRoute();
+const game = ref(null);
+const allGames = ref([]);
+
+watch(() => route.query, () => {
+  if (route.query.game && route.query.games) {
+    try {
+      game.value = JSON.parse(route.query.game);
+      allGames.value = JSON.parse(route.query.games);
+    } catch (e) {
+      console.error('Error parsing game details:', e);
+    }
+  }
+}, { deep: true });
+
+console.log("Current route query:", route.query);
+
 const toast = useToast();
 
 const shuffleAndPickRandomGames = (games, currentGame) => {
@@ -105,11 +123,43 @@ const addToFavorites = (game) => {
 const showDetails = (selectedGame) => {
   game.value = selectedGame;
   const gameParam = JSON.stringify(selectedGame);
-  router.push({ name: 'GameDetails', query: { game: gameParam, games: JSON.stringify(allGames.value) } });
+  console.log("Navigating to GameDetails with game data:", selectedGame);
+  router.push({
+    name: 'GameDetails',
+    query: {
+      game: JSON.stringify(selectedGame)
+    }
+  });
 };
 
-watch(() => route.query, () => {
+if (route.query.game) {
   game.value = JSON.parse(route.query.game);
-  allGames.value = JSON.parse(route.query.games);
-}, { deep: true });
+} else {
+  console.log("No game data available in route query");
+}
+
+onMounted(() => {
+  const gameData = route.query.game;
+  if (gameData && gameData !== 'undefined') {
+    try {
+      game.value = JSON.parse(gameData);
+    } catch (error) {
+      console.error('Failed to parse game data:', error);
+      // Optional: Display a user-friendly message or handle the error gracefully
+    }
+  } else {
+    console.error('No game data available or game data is undefined');
+    // Optional: Navigate back or display a message
+  }
+});
+
+watch(() => route.query.game, (newGame) => {
+  if (newGame && newGame !== 'undefined') {
+    try {
+      game.value = JSON.parse(newGame);
+    } catch (error) {
+      console.error('Failed to update game data:', error);
+    }
+  }
+});
 </script>
