@@ -9,51 +9,50 @@ import Login from '../pages/Login.vue'
 import { store } from '../useCartStore.js';
 
 const routes = [
-    {
-      path: '/',
-      name: 'Login',
-      component: Login,
-      meta: { requiresGuest: true }
-    },
-    {
-      path: '/home',
-      name: 'Home',
-      component: Home
-    },
-    {
-      path: '/cart',
-      name: 'Cart',
-      component: Cart
-    },
-    {
-      path: '/favorites',
-      name: 'Favorites',
-      component: Favorites
-    },
-    {
-      path: '/contact',
-      name: 'Contact',
-      component: Contact
-    },
-    {
-      path: '/game-details',
-      name: 'GameDetails',
-      component: GameDetails,
-      props: route => ({ game: route.query.game, games: route.query.games })
-    }
-  ]
+  {
+    path: '/',
+    name: 'Login',
+    component: Login,
+    meta: { requiresGuest: true }
+  },
+  {
+    path: '/home',
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: Cart
+  },
+  {
+    path: '/favorites',
+    name: 'Favorites',
+    component: Favorites
+  },
+  {
+    path: '/contact',
+    name: 'Contact',
+    component: Contact
+  },
+  {
+    path: '/game-details/:gameId',
+    name: 'GameDetails',
+    component: GameDetails
+  }
+]
 
-  const router = createRouter({
-    history: createWebHistory(),
-    routes
-  })
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+})
 
-  router.beforeEach((to, from, next) => {
-    if (to.meta.requiresGuest && store.isLoggedIn) {
-      next({ name: 'Home' }); 
-    } else {
-      next();
-    }
-  });
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresGuest && store.isLoggedIn) {
+    next({ name: 'Home' });
+  } else {
+    next();
+  }
+});
 
 export default router

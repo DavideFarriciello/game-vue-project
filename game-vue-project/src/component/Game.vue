@@ -7,7 +7,7 @@
     </div>
     <div class="flex flex-wrap justify-center p-5">
 
-      <div v-for="game in filteredGames" :key="game.id" @click="showDetails(game)"
+      <div v-for="game in filteredGames" :key="game._id" @click="showDetails(game)"
         class="bg-white-game rounded-lg lg:w-64 xs:w-[139px] ml-7 lg:mb-20 xs:mb-8 shadow-2xl hover-shadow-red transition-all duration-300 ease-in-out hover:scale-105 hover:cursor-pointer">
         <img :src="game.image" :alt="game.name" class="pt-1 px-1">
         <h2 class="lg:text-xl xs:text-base text-center lg:my-4 xs:my-2">{{ formatName(game.name) }}</h2>
@@ -39,8 +39,9 @@ const props = defineProps({
 
 const search = ref('');
 const filteredGames = computed(() => {
-  return props.games.filter(game => game.name.toLowerCase().includes(search.value.toLowerCase()));
+  return props.games.filter(game => game.name && game.name.toLowerCase().includes(search.value.toLowerCase()));
 });
+
 
 const toast = useToast();
 
@@ -50,12 +51,16 @@ const favoritedIds = reactive(new Set(cartStore.favorites.map(item => item.id)))
 
 
 const addToCart = (game) => {
-  const added = cartStore.addToCart(game);
-  if (added) {
-    cartIds.add(game.id);
-    toast.success(`Added ${game.name} to cart!`, { timeout: 4000 });
-  } else {
-    toast.warning(`${game.name} is already in the cart`, { timeout: 4000 });
+  try {
+    const added = cartStore.addToCart(game);
+    if (added) {
+      cartIds.add(game.id);
+      toast.success(`Added ${game.name} to cart!`, { timeout: 4000 });
+    } else {
+      toast.warning(`${game.name} is already in the cart`, { timeout: 4000 });
+    }
+  } catch (error) {
+    console.error('Error adding to cart:', error);
   }
 };
 
@@ -72,9 +77,7 @@ const addToFavorites = (game) => {
 const router = useRouter();
 
 const showDetails = (game) => {
-  const gameParam = JSON.stringify(game);
-  const gamesParam = JSON.stringify(props.games);
-  router.push({ name: 'GameDetails', query: { game: gameParam, games: gamesParam } });
+  router.push({ name: 'GameDetails', params: { gameId: game.id } });
 }
 
 //format the name is the lenght is over 23
