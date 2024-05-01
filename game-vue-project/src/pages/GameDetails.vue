@@ -46,7 +46,7 @@
     <div>
       <h2 class="lg:text-4xl xs:text-2xl lg:mt-20 xs:mt-5 flex justify-center text-gradient-from-fucsia">Other Games
       </h2>
-      <Game :games="otherGames" @game-clicked="showDetails" />
+      <Game :games="games"/>
     </div>
   </div>
 </template>
@@ -60,17 +60,41 @@ import { useRoute, useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
 import { inject, reactive } from 'vue';
 
+const games = ref([]);
+
+// Utility function to shuffle an array
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]]; // swap elements
+  }
+}
+
+// Function to fetch games from the backend
+const fetchGames = async () => {
+  try {
+    const response = await fetch('http://localhost:3000/games');
+    if (!response.ok) {
+      throw new Error('Failed to fetch games');
+    }
+    const data = await response.json();
+    shuffleArray(data[0].games);  // Shuffle the games array
+    games.value = data[0].games.slice(0, 5); // Take only the first 5 games
+    console.log("Fetched games:", games.value);  // Confirm the data structure
+  } catch (error) {
+    console.error('Error fetching games:', error);
+  }
+};
+
+// Use onMounted lifecycle hook to fetch games when the component is mounted
+onMounted(fetchGames);
 
 const cartStore = inject('cartStore');
 const cartIds = reactive(new Set(cartStore.cart.map(item => item.id)));
 const favoritedIds = reactive(new Set(cartStore.favorites.map(item => item.id)));
 
-
-const router = useRouter();
-
 const route = useRoute();
 const game = ref(null);
-const allGames = ref([]);
 
 watch(() => route.query, () => {
   if (route.query.game && route.query.games) {
@@ -87,18 +111,6 @@ console.log("Current route query:", route.query);
 
 const toast = useToast();
 
-const shuffleAndPickRandomGames = (games, currentGame) => {
-  return games
-    .filter(g => g.id !== currentGame.id) // Exclude current game
-    .sort(() => 0.5 - Math.random()) // Shuffle array
-    .slice(0, 5); // Pick first five
-};
-
-const otherGames = ref([]);
-
-onMounted(() => {
-  otherGames.value = shuffleAndPickRandomGames(allGames.value, game.value);
-});
 
 const addToCart = (game) => {
   const added = cartStore.addToCart(game);
@@ -120,46 +132,10 @@ const addToFavorites = (game) => {
   }
 };
 
-const showDetails = (selectedGame) => {
-  game.value = selectedGame;
-  const gameParam = JSON.stringify(selectedGame);
-  console.log("Navigating to GameDetails with game data:", selectedGame);
-  router.push({
-    name: 'GameDetails',
-    query: {
-      game: JSON.stringify(selectedGame)
-    }
-  });
-};
-
 if (route.query.game) {
   game.value = JSON.parse(route.query.game);
 } else {
   console.log("No game data available in route query");
 }
 
-onMounted(() => {
-  const gameData = route.query.game;
-  if (gameData && gameData !== 'undefined') {
-    try {
-      game.value = JSON.parse(gameData);
-    } catch (error) {
-      console.error('Failed to parse game data:', error);
-      // Optional: Display a user-friendly message or handle the error gracefully
-    }
-  } else {
-    console.error('No game data available or game data is undefined');
-    // Optional: Navigate back or display a message
-  }
-});
-
-watch(() => route.query.game, (newGame) => {
-  if (newGame && newGame !== 'undefined') {
-    try {
-      game.value = JSON.parse(newGame);
-    } catch (error) {
-      console.error('Failed to update game data:', error);
-    }
-  }
-});
 </script>
