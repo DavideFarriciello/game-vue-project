@@ -20,7 +20,9 @@
           us</router-link>
       </div>
     </div>
-    <router-view :key="$route.fullPath" />
+    <transition name="page-slide" mode="out-in">
+      <router-view :key="$route.fullPath"/>
+    </transition>
   </div>
 </template>
 
@@ -62,3 +64,16 @@ onUnmounted(() => {
   window.removeEventListener('resize', updateWidth);
 });
 </script>
+
+<style>
+.page-slide-enter-from,
+.page-slide-leave-to{
+  opacity: 0;
+  transform: translateX(60px);
+}
+
+.page-slide-enter-active,
+.page-slide-leave-active{
+  transition: 400ms ease all;
+}
+</style>
