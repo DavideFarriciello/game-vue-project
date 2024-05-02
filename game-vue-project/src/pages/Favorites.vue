@@ -4,9 +4,9 @@
     <div v-if="favoritesStore.favorites.length > 0" class="flex flex-wrap justify-center">
       <div v-for="item in favoritesStore.favorites" :key="item.id" >
         <div
-          class="flex flex-row space-x-4 bg-white-game lg:mt-8 xs:mt-3 pt-2 p-4 lg:mx-24 xs:mx-1 rounded-lg shadow-2xl hover-shadow-red transition-all duration-300 ease-in-out hover:scale-105 lg:w-[90%] xs:w-[97%] h-[150px] ">
+          class="flex flex-row space-x-4 bg-white-game lg:mt-8 xs:mt-3 pt-2 p-4 lg:mx-24 xs:mx-1 rounded-lg shadow-2xl hover-shadow-red transition-all duration-300 ease-in-out hover:scale-105 lg:w-[90%] xs:w-[97%] h-[170px] ">
           <img :src="item.image" :alt="item.name" class="rounded-md ">
-          <div class="flex flex-col pl-6 mt-4">
+          <div class="flex flex-col pl-6 lg:mt-4 xs:mt-0">
             <h2 class="lg:text-4xl xs:text-xl font-bold lg:mb-3 xs:mb-1">{{ item.name }}</h2>
             <div class="flex flex-row">
               <h2 class="lg:text-3xl xs:text-xl lg:mt-5 xs:mt-2">Price: {{ item.price }}€</h2>

@@ -20,9 +20,11 @@
           us</router-link>
       </div>
     </div>
-    <transition name="page-slide" mode="out-in">
-      <router-view :key="$route.fullPath"/>
-    </transition>
+    <router-view v-slot="{ Component }">
+      <transition name="page-slide" mode="out-in">
+        <component :is="Component" :key="$route.fullPath"/>
+      </transition>
+    </router-view>
   </div>
 </template>
 
