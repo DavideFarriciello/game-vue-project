@@ -51,7 +51,7 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-import { store } from '../useCartStore.js'
+import { store } from '../useStore.js'
 import { useToast } from 'vue-toastification';
 
 const router = useRouter();

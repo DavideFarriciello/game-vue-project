@@ -45,7 +45,7 @@
 <script setup>
 import { inject, computed, ref } from 'vue';
 
-const cartStore = inject('cartStore');
+const cartStore = inject('store');
 
 const removeFromCart = (id) => {
   cartStore.removeFromCart(id);

@@ -7,7 +7,7 @@
 
 <script setup>
 import Header from './component/Header.vue';
-import { store } from './useCartStore.js';
+import { store } from './useStore.js';
 import Login from './pages/Login.vue';
 
 

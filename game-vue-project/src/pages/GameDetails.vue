@@ -62,11 +62,10 @@ import { inject, reactive } from 'vue';
 
 const games = ref([]);
 
-// Utility function to shuffle an array
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]]; // swap elements
+    [array[i], array[j]] = [array[j], array[i]]; 
   }
 }
 
@@ -78,18 +77,17 @@ const fetchGames = async () => {
       throw new Error('Failed to fetch games');
     }
     const data = await response.json();
-    shuffleArray(data[0].games);  // Shuffle the games array
-    games.value = data[0].games.slice(0, 5); // Take only the first 5 games
-    console.log("Fetched games:", games.value);  // Confirm the data structure
+    shuffleArray(data[0].games);
+    games.value = data[0].games.slice(0, 5); 
+    console.log("Fetched games:", games.value); 
   } catch (error) {
     console.error('Error fetching games:', error);
   }
 };
 
-// Use onMounted lifecycle hook to fetch games when the component is mounted
 onMounted(fetchGames);
 
-const cartStore = inject('cartStore');
+const cartStore = inject('store');
 const cartIds = reactive(new Set(cartStore.cart.map(item => item.id)));
 const favoritedIds = reactive(new Set(cartStore.favorites.map(item => item.id)));
 

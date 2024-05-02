@@ -17,10 +17,9 @@ const addToCart = (game) => {
   const existing = state.cart.find(item => item.id === game.id);
   if (!existing) {
     state.cart.push({ ...game, quantity: 1 });
-    return true;  // Indicate that the item was successfully added
+    return true;
   }
-  // Optionally return false or throw an error if the item is already in the cart
-  return false;  // Indicate that the item was not added because it already exists
+  return false;
 };
 
 const addToFavorites = (game) => {
@@ -50,7 +49,7 @@ const clearCart = () => {
   state.cart = [];
 };
 
-export function useCartStore() {
+export function useStore() {
   return {
     cart: readonly(state.cart),
     favorites: readonly(state.favorites),

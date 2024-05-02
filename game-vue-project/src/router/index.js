@@ -6,7 +6,7 @@ import Favorites from '../pages/Favorites.vue'
 import Contact from '../pages/Contact.vue'
 import GameDetails from '../pages/GameDetails.vue'
 import Login from '../pages/Login.vue'
-import { store } from '../useCartStore.js';
+import { store } from '../useStore.js';
 
 const routes = [
   {
@@ -53,6 +53,10 @@ router.beforeEach((to, from, next) => {
   } else {
     next();
   }
+});
+
+router.afterEach((to, from) => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 export default router

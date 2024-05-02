@@ -31,7 +31,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { logout } from '../useCartStore';
+import { logout } from '../useStore';
 
 const open = ref(false);
 const router = useRouter();

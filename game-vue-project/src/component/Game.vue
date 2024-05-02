@@ -51,7 +51,7 @@ const filteredGames = computed(() => {
 
 const toast = useToast();
 
-const cartStore = inject('cartStore');
+const cartStore = inject('store');
 const cartIds = reactive(new Set(cartStore.cart.map(item => item.id)));
 const favoritedIds = reactive(new Set(cartStore.favorites.map(item => item.id)));
 

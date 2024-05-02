@@ -27,7 +27,7 @@
 <script setup>
 import { inject } from 'vue';
 
-const favoritesStore = inject('cartStore');
+const favoritesStore = inject('store');
 
 const removeFromFavorites = (id) => {
   favoritesStore.removeFromFavorites(id);
