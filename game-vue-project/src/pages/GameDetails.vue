@@ -1,7 +1,7 @@
 <template>
   <div class="p-5 flex flex-col items-center justify-center">
     <div v-if="game"
-      class="flex flex-row space-x-4 bg-white-game lg:mt-8 xs:mt-2 pt-10 lg:p-4 xs:p-2 rounded-lg shadow-2xl hover-shadow-red transition-all duration-300 ease-in-out hover:scale-105 lg:w-[70%] lg:h-[600px] xs:w-fit xs:h-fit">
+      class="flex flex-row space-x-4 bg-white-game lg:mt-8 xs:mt-2 pt-10 lg:p-4 xs:p-2 rounded-lg shadow-2xl hover-shadow-red transition-all duration-300 ease-in-out hover:scale-105 lg:w-[70%] lg:h-[550px] xs:w-fit xs:h-fit">
       <img :src="game.image" :alt="game.name" class="lg:w-96 xs:w-40 h-fit rounded-md">
       <div class="flex flex-col lg:pl-16 xs:pl-0">
         <h2 class="lg:text-4xl xs:text-xl font-bold mb-3 xs:mb-1">{{ game.name }}</h2>
@@ -24,6 +24,14 @@
     <div v-else class="text-xl">
       Loading Details...
     </div>
+    <h2 class="lg:text-4xl xs:text-2xl lg:mt-20 xs:mt-4 xs:mb-2 lg:mb-10 flex justify-center text-gradient-from-fucsia">
+      Description</h2>
+    <h2 class="lg:text-xl xs:text-base w-[80%]">
+      {{ displayDescription }}
+      <span v-if="isDescriptionLong" class="text-gradient-from-fucsia cursor-pointer" @click="toggleDescription">
+        {{ showFullDescription ? 'show less' : 'show more' }}
+      </span>
+    </h2>
     <div>
       <h2
         class="lg:text-4xl xs:text-2xl lg:mt-20 xs:mt-4 xs:mb-2 lg:mb-10 flex justify-center text-gradient-from-fucsia">
@@ -46,7 +54,7 @@
     <div>
       <h2 class="lg:text-4xl xs:text-2xl lg:mt-20 xs:mt-5 flex justify-center text-gradient-from-fucsia">Other Games
       </h2>
-      <Game :games="games"/>
+      <Game :games="games" />
     </div>
   </div>
 </template>
@@ -65,7 +73,7 @@ const games = ref([]);
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]]; 
+    [array[i], array[j]] = [array[j], array[i]];
   }
 }
 
@@ -78,8 +86,8 @@ const fetchGames = async () => {
     }
     const data = await response.json();
     shuffleArray(data[0].games);
-    games.value = data[0].games.slice(0, 5); 
-    console.log("Fetched games:", games.value); 
+    games.value = data[0].games.slice(0, 5);
+    console.log("Fetched games:", games.value);
   } catch (error) {
     console.error('Error fetching games:', error);
   }
@@ -136,4 +144,21 @@ if (route.query.game) {
   console.log("No game data available in route query");
 }
 
+
+const showFullDescription = ref(false);
+
+const isDescriptionLong = computed(() => {
+  return game.value && game.value.description.split(' ').length > 20;
+});
+
+const displayDescription = computed(() => {
+  if (showFullDescription.value) {
+    return game.value ? game.value.description : '';
+  }
+  return game.value ? game.value.description.split(' ').slice(0, 20).join(' ') + '...' : '';
+});
+
+const toggleDescription = () => {
+  showFullDescription.value = !showFullDescription.value;
+};
 </script>
