@@ -1,8 +1,8 @@
 <template>
   <div>
     <h2 class="lg:text-5xl xs:text-3xl flex justify-center lg:mt-10 xs:mt-3 font-bold text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">Cart</h2>
-    <div v-if="cartStore.cart.length > 0">
-      <div v-for="item in cartStore.cart" :key="item.id">
+    <div v-if="cart.length > 0">
+      <div v-for="item in cart" :key="item.id">
         <div
           class="flex flex-row space-x-4 bg-white-game lg:mt-8 xs:mt-3 pt-2 p-4 lg:mx-20 xs:mx-1 rounded-lg shadow-2xl hover-shadow-red transition-all duration-300 ease-in-out hover:scale-105 lg:w-[90%] xs:w-[97%] h-[170px] ">
           <img :src="item.image" :alt="item.name" class="rounded-md ">
@@ -43,19 +43,8 @@
 </template>
 
 <script setup>
-import { inject, computed, ref } from 'vue';
+import { computed, ref } from 'vue';
 
-const cartStore = inject('store');
-
-const removeFromCart = (id) => {
-  cartStore.removeFromCart(id);
-};
-
-
-const totalPrice = computed(() => {
-  const total = cartStore.cart.reduce((sum, item) => sum + (item.price * 100), 0) / 100;
-  return Number(total.toFixed(2));
-});
 
 const shippingCost = computed(() => {
   return totalPrice.value < 50.00 ? 10.00 : 0.00;

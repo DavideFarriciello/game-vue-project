@@ -37,7 +37,7 @@
 import 'primeicons/primeicons.css'
 import { useToast } from 'vue-toastification';
 import { useRouter } from 'vue-router'
-import { inject, reactive, computed, ref, watch, onMounted } from 'vue';
+import { inject, reactive, computed, ref, onMounted } from 'vue';
 
 const props = defineProps({
   games: Array
@@ -51,34 +51,7 @@ const filteredGames = computed(() => {
 
 const toast = useToast();
 
-const cartStore = inject('store');
-const cartIds = reactive(new Set(cartStore.cart.map(item => item.id)));
-const favoritedIds = reactive(new Set(cartStore.favorites.map(item => item.id)));
 
-
-const addToCart = (game) => {
-  try {
-    const added = cartStore.addToCart(game);
-    if (added) {
-      cartIds.add(game.id);
-      toast.success(`Added ${game.name} to cart!`, { timeout: 4000 });
-    } else {
-      toast.warning(`${game.name} is already in the cart`, { timeout: 4000 });
-    }
-  } catch (error) {
-    console.error('Error adding to cart:', error);
-  }
-};
-
-const addToFavorites = (game) => {
-  const added = cartStore.addToFavorites(game);
-  if (added) {
-    favoritedIds.add(game.id);
-    toast.success(`Added ${game.name} to favorites!`, { timeout: 4000 });
-  } else {
-    toast.warning(`${game.name} is already in the favorites`, { timeout: 4000 });
-  }
-};
 
 const router = useRouter();
 

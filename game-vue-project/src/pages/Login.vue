@@ -51,7 +51,7 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-import { store } from '../useStore.js'
+import { store } from '../useStore.js';
 import { useToast } from 'vue-toastification';
 
 const router = useRouter();
@@ -65,34 +65,35 @@ const user = ref({
 });
 
 const showPassword = ref(false);
+const isLoading = ref(false);
 
 function handleSubmit() {
+  isLoading.value = true;
   const baseUrl = 'http://localhost:3000';
   const url = `${baseUrl}${formType.value === 'Login' ? '/login' : '/sign_up'}`;
 
   axios.post(url, user.value)
     .then(response => {
       console.log(response);
-
-      if (formType.value === 'Login' && response.data === 'Login successful') {
+      if (response.data === 'Login successful' || response.data === 'Signup successful') {
         store.isLoggedIn = true;
         router.push({ name: 'Home' });
+        if (formType.value === 'Register') {
+          alert('Your account has been successfully registered.');
+        }
       }
-
-      if (formType.value === 'Register' && response.data === 'Signup successful') {
-        store.isLoggedIn = true;
-        router.push({ name: 'Home' });
-        alert('Your account has been successfully registered.');
-      }
-
     })
     .catch(error => {
       console.error('Error submitting form:', error);
-      toast.warning(`${error.response.data}`, { timeout: 4000 });
+      toast.warning(`${error.response?.data || 'An unexpected error occurred'}`, { timeout: 4000 });
+    })
+    .finally(() => {
+      isLoading.value = false;
     });
 }
 
 function toggleFormType() {
   formType.value = formType.value === 'Login' ? 'Register' : 'Login';
+  user.value = { username: '', password: '', email: '' };
 }
 </script>
