@@ -10,7 +10,7 @@ import { store } from '../useStore.js';
 
 const routes = [
   {
-    path: '/',
+    path: '/login',
     name: 'Login',
     component: Login,
     meta: { requiresGuest: true }

@@ -3,7 +3,8 @@ const cors = require("cors");
 const nodemailer = require('nodemailer');
 const mongoose = require("mongoose");
 const GameModel = require('./models/games');
-const UserModel = require('./models/user'); // Make sure the path is correct
+const UserModel = require('./models/user');
+const CartModel = require('./models/cart.JS');
 
 const app = express();
 
@@ -53,7 +54,7 @@ if (!password) {
       return res.status(404).send('Sorry, we couldn\'t find your account!');
     }
     if (user.password === password) {
-      res.status(202).send('Login successful');
+      res.status(200).json({ message: 'Login successful', userId: user._id });
     } else {
       res.status(401).send("Oops! It seems like your password is incorrect.");
     }
@@ -133,4 +134,72 @@ function sendEmail(name, user_email, message) {
 
   return transporter.sendMail(mailOptions);
 }
+
+app.get('/cart', async (req, res) => {
+  if (!req.query.userId) {
+    return res.status(400).send('UserId is required');
+  }
+  try {
+    const cart = await CartModel.findOne({ userId: req.query.userId });
+    if (!cart) {
+      return res.status(404).send('Cart not found');
+    }
+
+    // Manually populate game details if necessary
+    const gameIds = cart.items.map(item => item.gameId);
+    const games = await GameModel.find({ 'id': { $in: gameIds } });
+    const populatedItems = cart.items.map(item => {
+      const gameDetails = games.find(game => game.id === item.gameId);
+      return { ...item, gameDetails };
+    });
+
+    res.json({ ...cart.toObject(), items: populatedItems });
+  } catch (error) {
+    console.error('Failed to fetch cart:', error);
+    res.status(500).send('Server error');
+  }
+});
+
+// add-to-cart
+app.post('/add-to-cart', async (req, res) => {
+  console.log("Received add-to-cart request with body:", req.body);
+  const { userId, gameId, quantity } = req.body;
+
+  if (!userId || !gameId || !quantity) {
+    return res.status(400).send('Missing userId, gameId, or quantity');
+  }
+
+  if (typeof quantity !== 'number' || quantity <= 0) {
+    return res.status(400).send('Invalid quantity');
+  }
+
+  try {
+    const userCart = await CartModel.findOne({ userId });
+    if (userCart) {
+      const gameIndex = userCart.items.findIndex(item => item.gameId.toString() === gameId.toString());
+
+      if (gameIndex > -1) {
+        userCart.items[gameIndex].quantity += quantity;
+      } else {
+        userCart.items.push({ gameId, quantity });
+      }
+
+      await userCart.save();
+    } else {
+      const newCart = new CartModel({
+        userId,
+        items: [{ gameId, quantity }]
+      });
+
+      await newCart.save();
+    }
+
+    res.status(200).send('Added to cart');
+  } catch (error) {
+    console.error('Error adding to cart:', error);
+    res.status(500).send('Failed to add to cart');
+  }
+});
+
+
 

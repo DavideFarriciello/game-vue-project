@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h2 class="lg:text-5xl xs:text-3xl flex justify-center lg:mt-10 xs:mt-3 font-bold text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">Cart</h2>
+    <h2
+      class="lg:text-5xl xs:text-3xl flex justify-center lg:mt-10 xs:mt-3 font-bold text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">
+      Cart</h2>
     <div v-if="cart.length > 0">
       <div v-for="item in cart" :key="item.id">
         <div
@@ -36,15 +38,44 @@
       </div>
     </div>
     <div v-else>
-      <h2 class="lg:text-5xl xs:text-3xl flex justify-center mt-10 pb-2 xs:px-2 lg:px-0 text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">Any item is being added to the cart
+      <h2
+        class="lg:text-5xl xs:text-3xl flex justify-center mt-10 pb-2 xs:px-2 lg:px-0 text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">
+        Any item is being added to the cart
       </h2>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, onMounted } from 'vue';
+import axios from 'axios';
 
+const cart = ref([]);
+const totalPrice = ref(0);
+
+const fetchCart = async () => {
+  const userId = localStorage.getItem('userId');  // Get userId from local storage
+  if (!userId) {
+    console.error("No user ID found, user might not be logged in");
+    return; // Prevents making the request if no userId is found
+  }
+
+  try {
+    const response = await axios.get(`http://localhost:3000/cart`, {
+      params: { userId }  // Include userId in the GET request
+    });
+    console.log("Cart response:", response.data);
+    cart.value = response.data.items;
+    calculateTotalPrice();
+  } catch (error) {
+    console.error("Failed to fetch cart items:", error);
+  }
+};
+
+
+const calculateTotalPrice = () => {
+  totalPrice.value = cart.value.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+};
 
 const shippingCost = computed(() => {
   return totalPrice.value < 50.00 ? 10.00 : 0.00;
@@ -55,4 +86,6 @@ const finalTotal = computed(() => {
 });
 
 const showTooltip = ref(false);
+
+onMounted(fetchCart);
 </script>

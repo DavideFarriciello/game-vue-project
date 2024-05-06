@@ -72,15 +72,20 @@ function handleSubmit() {
   const baseUrl = 'http://localhost:3000';
   const url = `${baseUrl}${formType.value === 'Login' ? '/login' : '/sign_up'}`;
 
-  axios.post(url, user.value)
+axios.post(url, user.value)
     .then(response => {
       console.log(response);
-      if (response.data === 'Login successful' || response.data === 'Signup successful') {
+      // Handle response based on the actual JSON data sent from the server
+      if (response.data.message === 'Login successful' || response.data.message === 'Signup successful') {
+        // Store userId in the client for future use if needed
+        localStorage.setItem('userId', response.data.userId); // Save userId to localStorage
         store.isLoggedIn = true;
         router.push({ name: 'Home' });
         if (formType.value === 'Register') {
           alert('Your account has been successfully registered.');
         }
+      } else {
+        toast.warning(response.data.message || 'Invalid login credentials', { timeout: 4000 });
       }
     })
     .catch(error => {

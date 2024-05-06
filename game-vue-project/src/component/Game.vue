@@ -15,11 +15,11 @@
           <p class="lg:text-xl xs:text-base text-center lg:my-4 xs:my-2">Price: {{ game.price }}€</p>
           <div class="flex flex-row">
             <button @click.stop="addToCart(game)"
-              :class="['bg-slate-950 text-white font-bold py-2 lg:w-32 xs:w-[90px] lg:text-lg xs:text-sm lg:ml-6 xs:ml-2 mb-2 rounded-lg shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out', cartIds.has(game.id) ? '!bg-fuchsia-900' : 'hover:bg-fuchsia-900 ']">
-              {{ cartIds.has(game.id) ? 'Added ' : 'Add to Cart' }}
+              :class="['bg-slate-950 text-white font-bold py-2 lg:w-32 xs:w-[90px] lg:text-lg xs:text-sm lg:ml-6 xs:ml-2 mb-2 rounded-lg shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out', isCarted(game.id) ? '!bg-fuchsia-900' : 'hover:bg-fuchsia-900']">
+              {{ isCarted(game.id) ? 'Added' : 'Add to Cart' }}
             </button>
-            <i @click.stop="addToFavorites(game)"
-              :class="['pi pi-heart lg:ml-8 xs:ml-3 mr-2 lg:text-4xl xs:text-3xl bg-white-game hover:-translate-y-1 transition duration-300 ease-in-out', favoritedIds.has(game.id) ? 'text-fuchsia-900' : 'hover:text-fuchsia-900']">
+            <i @click.stop=""
+              class="pi pi-heart lg:ml-8 xs:ml-3 mr-2 lg:text-4xl xs:text-3xl bg-white-game hover:-translate-y-1 transition duration-300 ease-in-out">
             </i>
           </div>
         </div>
@@ -43,6 +43,9 @@ const props = defineProps({
   games: Array
 });
 
+const cart = ref(new Map());
+const userId = localStorage.getItem('userId');
+
 const search = ref('');
 const filteredGames = computed(() => {
   return props.games.filter(game => game.name && game.name.toLowerCase().includes(search.value.toLowerCase()));
@@ -51,7 +54,40 @@ const filteredGames = computed(() => {
 
 const toast = useToast();
 
+const addToCart = async (game) => {
+  console.log("Game object:", game); 
+  // Check what the game object contains
+  const payload = {
+    userId: userId,
+    gameId: game.id, // This is where it seems to be undefined
+    quantity: 1
+  };
+  console.log("Sending to add-to-cart:", payload);
 
+
+
+  console.log("Sending to add-to-cart:", payload);
+
+  try {
+    const response = await fetch('http://localhost:3000/add-to-cart', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to add to cart with status: ${response.status}`);
+    }
+
+    cart.value.set(game._id, (cart.value.get(game._id) || 0) + 1);
+    toast.success('Added to cart successfully');
+  } catch (error) {
+    console.error('Error adding to cart:', error);
+    toast.error('Failed to add to cart');
+  }
+};
+
+const isCarted = (gameId) => cart.value.has(gameId);
 
 const router = useRouter();
 
@@ -84,6 +120,12 @@ const formatName = (name) => {
 //to show the search input only if the url is /home
 const isHome = computed(() => {
   return router.currentRoute.value.path === '/home';
+});
+
+onMounted(async () => {
+  const response = await fetch('http://localhost:3000/games');
+  const games = await response.json();
+  console.log("Fetched games:", games); // This should show the structure of game objects
 });
 
 

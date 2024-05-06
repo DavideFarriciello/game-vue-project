@@ -9,12 +9,12 @@
         <h2 class="lg:text-xl xs:text-base">{{ game.console }}</h2>
         <h2 class="lg:text-3xl xs:text-xl mt-8">Price: {{ game.price }}€</h2>
         <div class="flex flex-row ">
-          <button @click.stop="addToCart(game)"
-            :class="['bg-slate-950 text-white font-bold lg:text-xl lg:w-52 xs:w-24 xs:text-sm  xs:py-4 py-6 ml-2 mt-5 rounded-3xl shadow hover:bg-fuchsia-900 hover:shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out', cartIds.has(game.id) ? '!bg-fuchsia-900' : 'hover:bg-fuchsia-900 hover:shadow-lg']">
-            {{ cartIds.has(game.id) ? 'Added ' : 'Add to Cart' }}
+          <button
+            class="bg-slate-950 text-white font-bold lg:text-xl lg:w-52 xs:w-24 xs:text-sm  xs:py-4 py-6 ml-2 mt-5 rounded-3xl shadow hover:bg-fuchsia-900 hover:shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out'">
+
           </button>
-          <i @click.stop="addToFavorites(game)"
-            :class="['pi pi-heart lg:ml-8 lg:mt-8 xs:mt-7 lg:text-5xl xs:text-4xl xs:ml-2  bg-white-game hover:-translate-y-1 transition duration-300 ease-in-out hover:cursor-pointer', favoritedIds.has(game.id) ? 'text-fuchsia-900' : 'hover:text-fuchsia-900']"></i>
+          <i
+            class="pi pi-heart lg:ml-8 lg:mt-8 xs:mt-7 lg:text-5xl xs:text-4xl xs:ml-2  bg-white-game hover:-translate-y-1 transition duration-300 ease-in-out hover:cursor-pointer"></i>
         </div>
         <p class="lg:text-xl mb-1 lg:mt-24 xs:mt-3 xs:text-base">Type: {{ game.type }}</p>
         <p class="lg:text-xl mb-1 xs:text-base">Date: {{ game.dateGame }}</p>
@@ -95,9 +95,6 @@ const fetchGames = async () => {
 
 onMounted(fetchGames);
 
-const cartStore = inject('store');
-const cartIds = reactive(new Set(cartStore.cart.map(item => item.id)));
-const favoritedIds = reactive(new Set(cartStore.favorites.map(item => item.id)));
 
 const route = useRoute();
 const game = ref(null);
@@ -118,25 +115,6 @@ console.log("Current route query:", route.query);
 const toast = useToast();
 
 
-const addToCart = (game) => {
-  const added = cartStore.addToCart(game);
-  if (added) {
-    cartIds.add(game.id);
-    toast.success(`Added ${game.name} to cart!`, { timeout: 4000 });
-  } else {
-    toast.warning(`${game.name} is already in the cart`, { timeout: 4000 });
-  }
-};
-
-const addToFavorites = (game) => {
-  const added = cartStore.addToFavorites(game);
-  if (added) {
-    favoritedIds.add(game.id);
-    toast.success(`Added ${game.name} to favorites!`, { timeout: 4000 });
-  } else {
-    toast.warning(`${game.name} is already in the favorites`, { timeout: 4000 });
-  }
-};
 
 if (route.query.game) {
   game.value = JSON.parse(route.query.game);

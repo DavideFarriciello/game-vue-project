@@ -7,3 +7,4 @@ export const store = reactive({
 export function logout() {
   store.isLoggedIn = false;
 }
+

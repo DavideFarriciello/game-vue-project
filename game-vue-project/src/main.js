@@ -5,11 +5,11 @@ import App from './App.vue'
 import router from './router'
 import Toast from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
-import { useStore } from './useStore'
+import { store } from './useStore'
 
 const app = createApp(App)
 
 app.use(router)
-app.provide('store', useStore());
+app.provide('store');
 app.use(Toast);
 app.mount('#app')
