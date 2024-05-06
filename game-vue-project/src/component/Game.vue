@@ -59,7 +59,9 @@ const addToCart = async (game) => {
   // Check what the game object contains
   const payload = {
     userId: userId,
-    gameId: game.id, // This is where it seems to be undefined
+    gameId: game.id,
+    gameName: game.name,
+    gamePrice:game.price, // This is where it seems to be undefined
     quantity: 1
   };
   console.log("Sending to add-to-cart:", payload);

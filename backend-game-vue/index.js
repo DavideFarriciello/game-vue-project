@@ -163,9 +163,9 @@ app.get('/cart', async (req, res) => {
 // add-to-cart
 app.post('/add-to-cart', async (req, res) => {
   console.log("Received add-to-cart request with body:", req.body);
-  const { userId, gameId, quantity } = req.body;
+  const { userId, gameId, quantity, gameName, gamePrice } = req.body;
 
-  if (!userId || !gameId || !quantity) {
+  if (!userId || !gameId || !quantity || !gameName || !gamePrice) {
     return res.status(400).send('Missing userId, gameId, or quantity');
   }
 
@@ -181,14 +181,14 @@ app.post('/add-to-cart', async (req, res) => {
       if (gameIndex > -1) {
         userCart.items[gameIndex].quantity += quantity;
       } else {
-        userCart.items.push({ gameId, quantity });
+        userCart.items.push({ gameId, quantity, gameName, gamePrice });
       }
 
       await userCart.save();
     } else {
       const newCart = new CartModel({
         userId,
-        items: [{ gameId, quantity }]
+        items: [{ gameId, quantity, gameName, gamePrice }]
       });
 
       await newCart.save();
