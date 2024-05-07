@@ -36,8 +36,8 @@
 <script setup>
 import 'primeicons/primeicons.css'
 import { useToast } from 'vue-toastification';
-import { useRouter } from 'vue-router'
-import { inject, reactive, computed, ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { computed, ref, onMounted } from 'vue';
 
 const props = defineProps({
   games: Array
@@ -48,27 +48,39 @@ const userId = localStorage.getItem('userId');
 
 const search = ref('');
 const filteredGames = computed(() => {
-  return props.games.filter(game => game.name && game.name.toLowerCase().includes(search.value.toLowerCase()));
+  return props.games.filter(game => game.name.toLowerCase().includes(search.value.toLowerCase()));
 });
-
 
 const toast = useToast();
 
+// Fetch cart contents from the server and update local state
+const fetchCartContents = async () => {
+  try {
+    const response = await fetch(`http://localhost:3000/get-cart?userId=${userId}`);
+    if (response.ok) {
+      const items = await response.json();
+      items.forEach(item => {
+        cart.value.set(item.gameId, item.quantity);
+      });
+    }
+  } catch (error) {
+    console.error('Error fetching cart:', error);
+  }
+};
+
 const addToCart = async (game) => {
-  console.log("Game object:", game); 
-  // Check what the game object contains
+  if (cart.value.has(game.id)) {
+    toast.info('This game is already in your cart.');
+    return;
+  }
+  
   const payload = {
     userId: userId,
     gameId: game.id,
     gameName: game.name,
-    gamePrice:game.price, // This is where it seems to be undefined
+    gamePrice: game.price,
     quantity: 1
   };
-  console.log("Sending to add-to-cart:", payload);
-
-
-
-  console.log("Sending to add-to-cart:", payload);
 
   try {
     const response = await fetch('http://localhost:3000/add-to-cart', {
@@ -77,12 +89,12 @@ const addToCart = async (game) => {
       body: JSON.stringify(payload)
     });
 
-    if (!response.ok) {
+    if (response.ok) {
+      cart.value.set(game.id, 1); // Assuming adding one item at a time
+      toast.success('Added to cart successfully');
+    } else {
       throw new Error(`Failed to add to cart with status: ${response.status}`);
     }
-
-    cart.value.set(game._id, (cart.value.get(game._id) || 0) + 1);
-    toast.success('Added to cart successfully');
   } catch (error) {
     console.error('Error adding to cart:', error);
     toast.error('Failed to add to cart');
@@ -94,41 +106,18 @@ const isCarted = (gameId) => cart.value.has(gameId);
 const router = useRouter();
 
 const showDetails = (game) => {
-  if (game && game.id) {
-    try {
-      const gameParam = JSON.stringify(game);
-      router.push({
-        name: 'GameDetails',
-        params: { gameId: game.id },
-        query: { game: gameParam }
-      });
-    } catch (error) {
-      console.error('Error serializing game data:', error);
-    }
-  } else {
-    console.error('Invalid game data or missing game ID');
-  }
+  router.push({
+    name: 'GameDetails',
+    params: { gameId: game.id },
+    query: { game: JSON.stringify(game) }
+  });
 };
 
 onMounted(() => {
-  console.log("Games received in Game component:", props.games);
+  fetchCartContents();
 });
 
-//format the name is the lenght is over 23
-const formatName = (name) => {
-  return name.length > 23 ? `${name.substring(0, 20)}...` : name;
-};
+const formatName = (name) => name.length > 23 ? `${name.substring(0, 20)}...` : name;
 
-//to show the search input only if the url is /home
-const isHome = computed(() => {
-  return router.currentRoute.value.path === '/home';
-});
-
-onMounted(async () => {
-  const response = await fetch('http://localhost:3000/games');
-  const games = await response.json();
-  console.log("Fetched games:", games); // This should show the structure of game objects
-});
-
-
+const isHome = computed(() => router.currentRoute.value.path === '/home');
 </script>
