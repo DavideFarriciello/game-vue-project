@@ -1,11 +1,17 @@
 <template>
+
   <div>
-    <Game :games="games"/>
+    <Game :games="games" />
+    <transition name="modal">
+      <LoginSuccessModal />
+    </transition>
   </div>
+
 </template>
 
 <script setup>
-import Game from '@/component/Game.vue'; // Ensure correct path
+import Game from '@/component/Game.vue';
+import LoginSuccessModal from '@/component/LoginSuccessModal.vue';// Ensure correct path
 import { ref, onMounted } from 'vue';
 
 const games = ref([]);
@@ -28,3 +34,19 @@ const fetchGames = async () => {
 // Use onMounted lifecycle hook to fetch games when the component is mounted
 onMounted(fetchGames);
 </script>
+
+<style scoped>
+/* Transition for the modal background */
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.modal-enter,
+.modal-leave-to
+
+/* Starting and ending state for the fade */
+  {
+  opacity: 0;
+}
+</style>

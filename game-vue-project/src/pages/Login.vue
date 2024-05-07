@@ -95,10 +95,35 @@ axios.post(url, user.value)
     .finally(() => {
       isLoading.value = false;
     });
+
+    // login.vue script
+// After successful login
+axios.post(url, user.value)
+    .then(response => {
+      console.log(response);
+      if (response.data.message === 'Login successful') {
+        localStorage.setItem('userId', response.data.userId);
+        store.isLoggedIn = true;
+        store.showLoginSuccessModal = true; // Set a flag in the store
+        router.push({ name: 'Home' });
+      } else {
+        toast.warning(response.data.message || 'Invalid login credentials', { timeout: 4000 });
+      }
+    })
+    .catch(error => {
+      console.error('Error submitting form:', error);
+      toast.warning(`${error.response?.data || 'An unexpected error occurred'}`, { timeout: 4000 });
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
+
 }
 
 function toggleFormType() {
   formType.value = formType.value === 'Login' ? 'Register' : 'Login';
   user.value = { username: '', password: '', email: '' };
 }
+
+
 </script>

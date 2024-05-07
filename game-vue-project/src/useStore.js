@@ -1,7 +1,8 @@
-import { reactive, readonly } from 'vue';
+import { reactive} from 'vue';
 
 export const store = reactive({
-  isLoggedIn: false
+  isLoggedIn: false,
+  showLoginSuccessModal: false
 });
 
 export function logout() {

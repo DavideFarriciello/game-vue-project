@@ -1,17 +1,17 @@
 const mongoose = require('mongoose');
 
-const CartSchema = new mongoose.Schema({
+const FavoritesSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
   items: [{
     gameId: { type: Number, ref: 'games' },
     quantity: Number,
     gameName:String,
-    gamePrice:Number,
-    gameImage:String
+    gameImage:String,
+    gamePrice:Number
   }],
 
   modifiedOn: { type: Date, default: Date.now }
 });
 
-const CartModel = mongoose.model('cart', CartSchema);
-module.exports = CartModel;
+const FavoritesModel = mongoose.model('favorites',FavoritesSchema);
+module.exports = FavoritesModel;

@@ -4,7 +4,8 @@ const nodemailer = require('nodemailer');
 const mongoose = require("mongoose");
 const GameModel = require('./models/games');
 const UserModel = require('./models/user');
-const CartModel = require('./models/cart.JS');
+const CartModel = require('./models/cart');
+const FavoritesModel = require('./models/favorites');
 
 const app = express();
 
@@ -137,38 +138,33 @@ function sendEmail(name, user_email, message) {
 
 
 // add-to-cart
-// add-to-cart
+// Assuming that the gameImage URL is included in the request body
 app.post('/add-to-cart', async (req, res) => {
-  console.log("Received add-to-cart request with body:", req.body);
-  const { userId, gameId, quantity, gameName, gamePrice } = req.body;
-
-  if (!userId || !gameId || !quantity || !gameName || !gamePrice) {
-    return res.status(400).send('Missing userId, gameId, or quantity');
-  }
-
-  if (typeof quantity !== 'number' || quantity <= 0) {
-    return res.status(400).send('Invalid quantity');
+  const { userId, gameId, quantity, gameName, gamePrice, gameImage } = req.body;
+  
+  if (!userId || !gameId || !quantity || !gameName || !gamePrice || !gameImage) {
+    return res.status(400).send('All product details must be provided');
   }
 
   try {
     const userCart = await CartModel.findOne({ userId });
     if (userCart) {
-      const gameIndex = userCart.items.findIndex(item => item.gameId.toString() === gameId.toString());
-
+      // Check if the game is already in the cart
+      const gameIndex = userCart.items.findIndex(item => item.gameId.toString() === gameId);
       if (gameIndex > -1) {
-        // Prevent adding the same game again: respond with a message instead of updating quantity
-        return res.status(409).send('This game is already in your cart.');
+        // Optionally update the quantity here if needed
+        userCart.items[gameIndex].quantity += quantity;
       } else {
-        userCart.items.push({ gameId, quantity, gameName, gamePrice });
-        await userCart.save();
-        res.status(200).send('Added to cart');
+        userCart.items.push({ gameId, quantity, gameName, gamePrice, gameImage });
       }
+      await userCart.save();
+      res.status(200).send('Added to cart');
     } else {
+      // Create new cart if not existing
       const newCart = new CartModel({
         userId,
-        items: [{ gameId, quantity, gameName, gamePrice }]
+        items: [{ gameId, quantity, gameName, gamePrice, gameImage }]
       });
-
       await newCart.save();
       res.status(200).send('Added to cart');
     }
@@ -177,6 +173,7 @@ app.post('/add-to-cart', async (req, res) => {
     res.status(500).send('Failed to add to cart');
   }
 });
+
 
 // Get user cart
 app.get('/get-cart', async (req, res) => {
@@ -223,6 +220,91 @@ app.delete('/remove-from-cart', async (req, res) => {
       res.status(500).send('Failed to remove item from cart');
   }
 });
+
+
+//favorites 
+
+app.post('/add-to-favorites', async (req, res) => {
+  const { userId, gameId, quantity, gameName, gamePrice, gameImage } = req.body;
+  
+  if (!userId || !gameId || !quantity || !gameName || !gameImage || !gamePrice) {
+    return res.status(400).send('All product details must be provided');
+  }
+
+  try {
+    const userFavorites = await FavoritesModel.findOne({ userId });
+    if (userFavorites) {
+      // Check if the game is already in the favorites
+      const gameIndex = userFavorites.items.findIndex(item => item.gameId.toString() === gameId);
+      if (gameIndex > -1) {
+        // Optionally update the quantity here if needed
+        userFavorites.items[gameIndex].quantity += quantity;
+      } else {
+        userFavorites.items.push({ gameId, quantity, gameName, gameImage,gamePrice });
+      }
+      await userFavorites.save();
+      res.status(200).send('Added to favoriteis');
+    } else {
+      // Create new favoriteis if not existing
+      const newFavorites = new FavoritesModel({
+        userId,
+        items: [{ gameId, quantity, gameName, gamePrice, gameImage }]
+      });
+      await newFavorites.save();
+      res.status(200).send('Added to favoriteis');
+    }
+  } catch (error) {
+    console.error('Error adding to favoriteis:', error);
+    res.status(500).send('Failed to add to favoriteis');
+  }
+});
+
+app.get('/get-favorites', async (req, res) => {
+  const { userId } = req.query;
+
+  if (!userId) {
+    return res.status(400).send('Missing userId');
+  }
+
+  try {
+    const userFavorites = await FavoritesModel.findOne({ userId }).exec();
+    if (userFavorites) {
+      res.json(userFavorites.items);
+    } else {
+      res.status(404).send('Favorites not found');
+    }
+  } catch (error) {
+    console.error('Error fetching favoriteis:', error);
+    res.status(500).send('Failed to fetch favoriteis');
+  }
+});
+
+// Remove item from favorites
+app.delete('/remove-from-favorites', async (req, res) => {
+  const { userId, gameId } = req.body;
+
+  if (!userId || !gameId) {
+      return res.status(400).send('Missing userId or gameId');
+  }
+
+  try {
+      const userFavorites = await FavoritesModel.findOne({ userId });
+      if (!userFavorites) {
+          return res.status(404).send('Favorites not found');
+      }
+
+      // Filter out the item to be removed
+      userFavorites.items = userFavorites.items.filter(item => item.gameId.toString() !== gameId.toString());
+      await userFavorites.save();
+
+      res.status(200).send('Item removed from favorites');
+  } catch (error) {
+      console.error('Error removing item from favorites:', error);
+      res.status(500).send('Failed to remove item from favorites');
+  }
+});
+
+
 
 
 

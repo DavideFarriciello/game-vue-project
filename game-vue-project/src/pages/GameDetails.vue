@@ -9,12 +9,12 @@
         <h2 class="lg:text-xl xs:text-base">{{ game.console }}</h2>
         <h2 class="lg:text-3xl xs:text-xl mt-8">Price: {{ game.price }}€</h2>
         <div class="flex flex-row ">
-          <button
-            class="bg-slate-950 text-white font-bold lg:text-xl lg:w-52 xs:w-24 xs:text-sm  xs:py-4 py-6 ml-2 mt-5 rounded-3xl shadow hover:bg-fuchsia-900 hover:shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out'">
-
-          </button>
-          <i
-            class="pi pi-heart lg:ml-8 lg:mt-8 xs:mt-7 lg:text-5xl xs:text-4xl xs:ml-2  bg-white-game hover:-translate-y-1 transition duration-300 ease-in-out hover:cursor-pointer"></i>
+          <button @click.stop="addToCart(game)"
+          :class="['bg-slate-950 text-white font-bold lg:text-xl lg:w-52 xs:w-24 xs:text-sm  xs:py-4 py-6 ml-2 mt-5 rounded-3xl shadow hover:bg-fuchsia-900 hover:shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out', isCarted(game.id) ? '!bg-fuchsia-900' : 'hover:bg-fuchsia-900 hover:shadow-lg']">
+            {{ isCarted(game.id) ? 'Added ' : 'Add to Cart' }}
+            </button>
+          <i  @click.stop="addToFavorites(game)"
+            :class="['pi pi-heart lg:ml-8 lg:mt-8 xs:mt-7 lg:text-5xl xs:text-4xl xs:ml-2  bg-white-game hover:-translate-y-1 transition duration-300 ease-in-out hover:cursor-pointer', isFavorite(game.id) ? 'text-fuchsia-900' : 'hover:text-fuchsia-900']"></i>
         </div>
         <p class="lg:text-xl mb-1 lg:mt-24 xs:mt-3 xs:text-base">Type: {{ game.type }}</p>
         <p class="lg:text-xl mb-1 xs:text-base">Date: {{ game.dateGame }}</p>
@@ -69,6 +69,10 @@ import { useToast } from 'vue-toastification';
 import { inject, reactive } from 'vue';
 
 const games = ref([]);
+const cart = ref(new Map());
+const favorites = ref(new Map());
+const userId = localStorage.getItem('userId');
+
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -93,7 +97,115 @@ const fetchGames = async () => {
   }
 };
 
-onMounted(fetchGames);
+
+// Fetch cart contents and add to cart function
+const fetchCartContents = async () => {
+  try {
+    const response = await fetch(`http://localhost:3000/get-cart?userId=${userId}`);
+    if (response.ok) {
+      const items = await response.json();
+      items.forEach(item => {
+        cart.value.set(item.gameId, item.quantity);
+      });
+    }
+  } catch (error) {
+    console.error('Error fetching cart:', error);
+  }
+};
+
+const addToCart = async (game) => {
+  if (cart.value.has(game.id)) {
+    toast.info('This game is already in your cart.');
+    return;
+  }
+  
+  const payload = {
+    userId: userId,
+    gameId: game.id,
+    gameName: game.name,
+    gamePrice: game.price,
+    gameImage: game.image,
+    quantity: 1
+  };
+
+  try {
+    const response = await fetch('http://localhost:3000/add-to-cart', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (response.ok) {
+      cart.value.set(game.id, 1); // Assuming adding one item at a time
+      toast.success('Added to cart successfully');
+    } else {
+      throw new Error(`Failed to add to cart with status: ${response.status}`);
+    }
+  } catch (error) {
+    console.error('Error adding to cart:', error);
+    toast.error('Failed to add to cart');
+  }
+};
+
+
+const isCarted = (gameId) => cart.value.has(gameId);
+
+// Fetch favorites contents and add to favorite function
+const fetchFavoritesContents = async () => {
+  try {
+    const response = await fetch(`http://localhost:3000/get-favorites?userId=${userId}`);
+    if (response.ok) {
+      const items = await response.json();
+      items.forEach(item => {
+        favorites.value.set(item.gameId, item.quantity);
+      });
+    }
+  } catch (error) {
+    console.error('Error fetching favorites:', error);
+  }
+};
+
+const addToFavorites = async (game) => {
+  if (favorites.value.has(game.id)) {
+    toast.info('This game is already in your favorites.');
+    return;
+  }
+
+  const payloadF = {
+    userId: userId,
+    gameId: game.id,
+    gameName: game.name,
+    gameImage: game.image,
+    gamePrice: game.price,
+    quantity: 1
+  };
+
+  try {
+    const response = await fetch('http://localhost:3000/add-to-favorites', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payloadF)
+    });
+
+    if (response.ok) {
+      favorites.value.set(game.id, 1); // Assuming adding one item at a time
+      toast.success('Added to favorites successfully');
+    } else {
+      throw new Error(`Failed to add to favorites with status: ${response.status}`);
+    }
+  } catch (error) {
+    console.error('Error adding to favorites:', error);
+    toast.error('Failed to add to favorites');
+  }
+};
+
+const isFavorite = (gameId) => favorites.value.has(gameId);
+
+onMounted(() => {
+  fetchCartContents();
+  fetchFavoritesContents();
+  fetchGames();
+});
 
 
 const route = useRoute();

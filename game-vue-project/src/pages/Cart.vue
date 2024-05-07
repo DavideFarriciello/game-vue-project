@@ -11,7 +11,7 @@
         <div class="flex flex-col pl-6 lg:mt-4 xs:mt-0">
           <h2 class="lg:text-4xl xs:text-xl font-bold lg:mb-3 xs:mb-1">{{ item.gameName }}</h2>
           <div class="flex flex-row">
-            <p class="lg:text-3xl xs:text-xl lg:mt-5 xs:mt-2">Price: €{{ item.gamePrice }}</p>
+            <p class="lg:text-3xl xs:text-xl lg:mt-5 xs:mt-2">Price: €{{ item.gamePrice.toFixed(2) }}</p>
             <button @click="removeFromCart(item.gameId)"
               class="bg-slate-950 text-white font-bold lg:h-14 xs:h-11 px-4 ml-6 mt-3 rounded-lg shadow hover:bg-fuchsia-900 hover:shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out">
               Remove
@@ -54,7 +54,7 @@ const userId = localStorage.getItem('userId');
 const cartItems = ref([]);
 
 const totalPrice = ref(0);
-const shippingCost = ref(10); 
+const shippingCost = ref(10);
 const finalTotal = ref(0);
 const showTooltip = ref(false);
 
@@ -81,9 +81,18 @@ function updateTotals() {
   cartItems.value.forEach(item => {
     subtotal += item.quantity * item.gamePrice;
   });
-  totalPrice.value = subtotal;
-  finalTotal.value = subtotal + shippingCost.value;
+
+  totalPrice.value = parseFloat(subtotal.toFixed(2));
+
+  if (subtotal > 50) {
+    shippingCost.value = 0;
+  } else {
+    shippingCost.value = 10;
+  }
+
+  finalTotal.value = parseFloat((subtotal + shippingCost.value).toFixed(2));
 }
+
 
 async function removeFromCart(gameId) {
   try {
@@ -99,7 +108,7 @@ async function removeFromCart(gameId) {
       throw new Error(`Failed to remove item from cart with status: ${response.status}`);
     }
 
-    // Update local cart state
+    // Update local cart state after removal
     const index = cartItems.value.findIndex(item => item.gameId === gameId);
     if (index !== -1) {
       cartItems.value.splice(index, 1);
@@ -109,6 +118,4 @@ async function removeFromCart(gameId) {
     console.error('Error removing item from cart:', error);
   }
 }
-
 </script>
-

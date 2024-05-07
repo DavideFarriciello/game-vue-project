@@ -15,12 +15,12 @@
           <p class="lg:text-xl xs:text-base text-center lg:my-4 xs:my-2">Price: {{ game.price }}€</p>
           <div class="flex flex-row">
             <button @click.stop="addToCart(game)"
-              :class="['bg-slate-950 text-white font-bold py-2 lg:w-32 xs:w-[90px] lg:text-lg xs:text-sm lg:ml-6 xs:ml-2 mb-2 rounded-lg shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out', isCarted(game.id) ? '!bg-fuchsia-900' : 'hover:bg-fuchsia-900']">
-              {{ isCarted(game.id) ? 'Added' : 'Add to Cart' }}
+          :class="['bg-slate-950 text-white font-bold lg:text-xl lg:w-52 xs:w-28 xs:text-sm  xs:py-2 lg:py-3 ml-2 mt-5 mb-2 rounded-3xl shadow hover:bg-fuchsia-900 hover:shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out', isCarted(game.id) ? '!bg-fuchsia-900' : 'hover:bg-fuchsia-900 hover:shadow-lg']">
+            {{ isCarted(game.id) ? 'Added ' : 'Add to Cart' }}
             </button>
-            <i @click.stop=""
-              class="pi pi-heart lg:ml-8 xs:ml-3 mr-2 lg:text-4xl xs:text-3xl bg-white-game hover:-translate-y-1 transition duration-300 ease-in-out">
-            </i>
+            <i @click.stop="addToFavorites(game)"
+            :class="['pi pi-heart lg:ml-6 mt-6 lg:text-5xl xs:text-4xl xs:ml-2 xs:mr-1 lg:mr-4 bg-white-game hover:-translate-y-1 transition duration-300 ease-in-out hover:cursor-pointer', isFavorite(game.id) ? 'text-fuchsia-900' : 'hover:text-fuchsia-900']">
+          </i>
           </div>
         </div>
       </div>
@@ -44,16 +44,20 @@ const props = defineProps({
 });
 
 const cart = ref(new Map());
+
+const favorites = ref(new Map());
+
 const userId = localStorage.getItem('userId');
+
+const toast = useToast();
 
 const search = ref('');
 const filteredGames = computed(() => {
   return props.games.filter(game => game.name.toLowerCase().includes(search.value.toLowerCase()));
 });
 
-const toast = useToast();
 
-// Fetch cart contents from the server and update local state
+// Fetch cart contents and add to cart function
 const fetchCartContents = async () => {
   try {
     const response = await fetch(`http://localhost:3000/get-cart?userId=${userId}`);
@@ -79,6 +83,7 @@ const addToCart = async (game) => {
     gameId: game.id,
     gameName: game.name,
     gamePrice: game.price,
+    gameImage: game.image,
     quantity: 1
   };
 
@@ -103,6 +108,59 @@ const addToCart = async (game) => {
 
 const isCarted = (gameId) => cart.value.has(gameId);
 
+// Fetch favorites contents and add to favorite function
+const fetchFavoritesContents = async () => {
+  try {
+    const response = await fetch(`http://localhost:3000/get-favorites?userId=${userId}`);
+    if (response.ok) {
+      const items = await response.json();
+      items.forEach(item => {
+        favorites.value.set(item.gameId, item.quantity);
+      });
+    }
+  } catch (error) {
+    console.error('Error fetching favorites:', error);
+  }
+};
+
+const addToFavorites = async (game) => {
+  if (favorites.value.has(game.id)) {
+    toast.info('This game is already in your favorites.');
+    return;
+  }
+
+  const payloadF = {
+    userId: userId,
+    gameId: game.id,
+    gameName: game.name,
+    gameImage: game.image,
+    gamePrice: game.price,
+    quantity: 1
+  };
+
+  try {
+    const response = await fetch('http://localhost:3000/add-to-favorites', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payloadF)
+    });
+
+    if (response.ok) {
+      favorites.value.set(game.id, 1); // Assuming adding one item at a time
+      toast.success('Added to favorites successfully');
+    } else {
+      throw new Error(`Failed to add to favorites with status: ${response.status}`);
+    }
+  } catch (error) {
+    console.error('Error adding to favorites:', error);
+    toast.error('Failed to add to favorites');
+  }
+};
+
+const isFavorite = (gameId) => favorites.value.has(gameId);
+
+
+
 const router = useRouter();
 
 const showDetails = (game) => {
@@ -115,6 +173,7 @@ const showDetails = (game) => {
 
 onMounted(() => {
   fetchCartContents();
+  fetchFavoritesContents();
 });
 
 const formatName = (name) => name.length > 23 ? `${name.substring(0, 20)}...` : name;
