@@ -78,34 +78,15 @@ axios.post(url, user.value)
       // Handle response based on the actual JSON data sent from the server
       if (response.data.message === 'Login successful' || response.data.message === 'Signup successful') {
         // Store userId in the client for future use if needed
-        localStorage.setItem('userId', response.data.userId); // Save userId to localStorage
+        localStorage.setItem('userId', response.data.userId);
+         // Save userId to localStorage
         store.isLoggedIn = true;
+        store.showLoginSuccessModal = true; // Set a flag in the store
         router.push({ name: 'Home' });
         if (formType.value === 'Register') {
           alert('Your account has been successfully registered.');
         }
-      } else {
-        toast.warning(response.data.message || 'Invalid login credentials', { timeout: 4000 });
-      }
-    })
-    .catch(error => {
-      console.error('Error submitting form:', error);
-      toast.warning(`${error.response?.data || 'An unexpected error occurred'}`, { timeout: 4000 });
-    })
-    .finally(() => {
-      isLoading.value = false;
-    });
-
-    // login.vue script
-// After successful login
-axios.post(url, user.value)
-    .then(response => {
-      console.log(response);
-      if (response.data.message === 'Login successful') {
-        localStorage.setItem('userId', response.data.userId);
-        store.isLoggedIn = true;
-        store.showLoginSuccessModal = true; // Set a flag in the store
-        router.push({ name: 'Home' });
+        
       } else {
         toast.warning(response.data.message || 'Invalid login credentials', { timeout: 4000 });
       }

@@ -39,7 +39,7 @@ onMounted(fetchGames);
 /* Transition for the modal background */
 .modal-enter-active,
 .modal-leave-active {
-  transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease-in-out;
 }
 
 .modal-enter,
