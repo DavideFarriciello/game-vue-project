@@ -2,14 +2,14 @@
   <div>
     <div class="flex justify-center">
       <input v-if="isHome" type="text" placeholder="Search games"
-        class="lg:text-xl pl-5 py-2 mt-5 lg:w-96 rounded-full shadow-2xl hover-shadow-red transition-all duration-300 ease-in-out hover:scale-105 outline-none xs:w-72 xs:text-base"
+        class="lg:text-xl pl-5 py-2 mt-5 lg:w-96 rounded-full shadow-2xl hover-shadow-purple transition-all duration-300 ease-in-out hover:scale-105 outline-none xs:w-72 xs:text-base"
         v-model="search">
     </div>
     <div v-if="filteredGames.length > 0">
       <div class="flex flex-wrap justify-center p-5">
 
         <div v-for="game in filteredGames" :key="game._id" @click="showDetails(game)"
-          class="bg-white-game rounded-lg lg:w-64 xs:w-[139px] ml-7 lg:mb-20 xs:mb-8 shadow-2xl hover-shadow-red transition-all duration-300 ease-in-out hover:scale-105 hover:cursor-pointer">
+          class="bg-white-game rounded-lg lg:w-64 xs:w-[139px] ml-7 lg:mb-20 xs:mb-8 shadow-2xl hover-shadow-purple transition-all duration-300 ease-in-out hover:scale-105 hover:cursor-pointer">
           <img :src="game.image" :alt="game.name" class="pt-1 px-1">
           <h2 class="lg:text-xl xs:text-base text-center lg:my-4 xs:my-2">{{ formatName(game.name) }}</h2>
           <p class="lg:text-xl xs:text-base text-center lg:my-4 xs:my-2">Price: {{ game.price }}€</p>

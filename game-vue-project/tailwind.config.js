@@ -9,18 +9,11 @@ export default {
         'spacing': 'margin, padding',
         'transform': 'transform'
       },
-      colors: {
-
-      },
-    },
-    fontFamily: {
-
     },
     screens: {
       'xs':'340px',
       'lg':'1024px',
     }
-
   },
   variants: {
     extend: {

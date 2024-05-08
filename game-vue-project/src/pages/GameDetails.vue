@@ -1,7 +1,7 @@
 <template>
   <div class="p-5 flex flex-col items-center justify-center">
     <div v-if="game"
-      class="flex flex-row space-x-4 bg-white-game lg:mt-8 xs:mt-2 pt-10 lg:p-4 xs:p-2 rounded-lg shadow-2xl hover-shadow-red transition-all duration-300 ease-in-out hover:scale-105 lg:w-[70%] lg:h-[550px] xs:w-fit xs:h-fit">
+      class="flex flex-row space-x-4 bg-white-game lg:mt-8 xs:mt-2 pt-10 lg:p-4 xs:p-2 rounded-lg shadow-2xl hover-shadow-purple transition-all duration-300 ease-in-out hover:scale-105 lg:w-[70%] lg:h-[550px] xs:w-fit xs:h-fit">
       <img :src="game.image" :alt="game.name" class="lg:w-96 xs:w-40 h-fit rounded-md">
       <div class="flex flex-col lg:pl-16 xs:pl-0">
         <h2 class="lg:text-4xl xs:text-xl font-bold mb-3 xs:mb-1">{{ game.name }}</h2>
@@ -39,15 +39,15 @@
       <div class="flex flex-col lg:gap-10 xs:gap-3">
         <div class="flex lg:flex-row xs:flex-col lg:gap-16 xs:gap-3">
           <img :src="game.pic1"
-            class="h-fit w-96 rounded-md hover-shadow-red shadow-2xl transition-all duration-300 ease-in-out lg:hover:scale-125">
+            class="h-fit w-96 rounded-md hover-shadow-purple shadow-2xl transition-all duration-300 ease-in-out lg:hover:scale-125">
           <img :src="game.pic2"
-            class="w-96 h-fit rounded-md hover-shadow-red shadow-2xl transition-all duration-300 ease-in-out lg:hover:scale-125">
+            class="w-96 h-fit rounded-md hover-shadow-purple shadow-2xl transition-all duration-300 ease-in-out lg:hover:scale-125">
         </div>
         <div class="flex lg:flex-row xs:flex-col lg:gap-16 xs:gap-3">
           <img :src="game.pic3"
-            class="w-96 h-fit rounded-md hover-shadow-red shadow-2xl transition-all duration-300 ease-in-out lg:hover:scale-125">
+            class="w-96 h-fit rounded-md hover-shadow-purple shadow-2xl transition-all duration-300 ease-in-out lg:hover:scale-125">
           <img :src="game.pic4"
-            class="w-96 h-fit rounded-md hover-shadow-red shadow-2xl transition-all duration-300 ease-in-out lg:hover:scale-125">
+            class="w-96 h-fit rounded-md hover-shadow-purple shadow-2xl transition-all duration-300 ease-in-out lg:hover:scale-125">
         </div>
       </div>
     </div>

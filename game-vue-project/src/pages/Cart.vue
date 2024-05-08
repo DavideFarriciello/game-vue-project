@@ -6,7 +6,7 @@
     </h2>
     <div v-if="cartItems.length > 0">
       <div v-for="item in cartItems" :key="item.gameId"
-        class="flex flex-row space-x-4 bg-white-game lg:mt-8 xs:mt-3 pt-2 p-4 lg:mx-20 xs:mx-1 rounded-lg shadow-2xl hover-shadow-red transition-all duration-300 ease-in-out hover:scale-105 lg:w-[90%] xs:w-[97%] h-[170px] ">
+        class="flex flex-row space-x-4 bg-white-game lg:mt-8 xs:mt-3 pt-2 p-4 lg:mx-20 xs:mx-1 rounded-lg shadow-2xl hover-shadow-purple transition-all duration-300 ease-in-out hover:scale-105 lg:w-[90%] xs:w-[97%] h-[170px] ">
         <img :src="item.gameImage" :alt="item.gameName" class="rounded-md">
         <div class="flex flex-col pl-6 lg:mt-4 xs:mt-0">
           <h2 class="lg:text-4xl xs:text-xl font-bold lg:mb-3 xs:mb-1">{{ item.gameName }}</h2>

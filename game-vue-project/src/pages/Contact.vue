@@ -21,7 +21,7 @@
     </div>
     <div class="flex flex-wrap justify-center p-5">
       <div
-        class="bg-white-game rounded-lg lg:w-[40%] xs:w-[90%] lg:h-[390px] xs:[370px] lg:my-8 xs:my-1 shadow-2xl transition-all duration-300 ease-in-out hover:scale-105 hover-shadow-red">
+        class="bg-white-game rounded-lg lg:w-[40%] xs:w-[90%] lg:h-[390px] xs:[370px] lg:my-8 xs:my-1 shadow-2xl transition-all duration-300 ease-in-out hover:scale-105 hover-shadow-purple">
 
         <form class="flex flex-col px-4" @submit="handleSubmit">
           <input type="text" name="name" placeholder="Name" class="mt-3 mb-3 p-4 rounded-lg outline-none">
