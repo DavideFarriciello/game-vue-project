@@ -50,7 +50,7 @@ function handleLogout() {
   }).then((result) => {
     if (result.isConfirmed) {
       logout();
-      router.push('/login');
+      router.push('/');
       Swal.fire({
         icon: "success",
         title: "Logged Out",

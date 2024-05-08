@@ -92,7 +92,6 @@ const fetchGames = async () => {
     const data = await response.json();
     shuffleArray(data[0].games);
     games.value = data[0].games.slice(0, 5);
-    console.log("Fetched games:", games.value);
   } catch (error) {
     console.error('Error fetching games:', error);
   }
@@ -221,8 +220,6 @@ watch(() => route.query, () => {
     }
   }
 }, { deep: true });
-
-console.log("Current route query:", route.query);
 
 
 if (route.query.game) {

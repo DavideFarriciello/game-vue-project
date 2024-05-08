@@ -19,8 +19,7 @@ const fetchGames = async () => {
       throw new Error('Failed to fetch games');
     }
     const data = await response.json();
-    games.value = data[0].games; // Adjust this line to correctly set the games data
-    console.log("Fetched games:", games.value);  // Confirm the data structure
+    games.value = data[0].games;
   } catch (error) {
     console.error('Error fetching games:', error);
   }

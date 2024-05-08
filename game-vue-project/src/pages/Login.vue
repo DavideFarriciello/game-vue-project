@@ -75,7 +75,6 @@ function handleSubmitAuthentication() {
 
   axios.post(url, user.value)
     .then(response => {
-      console.log(response);
       if (response.data.message === 'Login successful' || response.data.message === 'Signup successful') {
         localStorage.setItem('userId', response.data.userId);
         store.isLoggedIn = true; // Ensure this is reactive

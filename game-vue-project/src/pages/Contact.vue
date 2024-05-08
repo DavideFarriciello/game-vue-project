@@ -51,8 +51,6 @@ const handleSubmitForm = async (event) => {
     const formData = new FormData(event.target);
     const formProps = Object.fromEntries(formData);
 
-    console.log("Form data:", formProps);
-
     try {
         const response = await axios.post('http://localhost:3000/contact', formProps);
         console.log('Server response:', response.data);
