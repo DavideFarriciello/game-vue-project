@@ -26,7 +26,7 @@
             @mouseover="showTooltip = true" @mouseleave="showTooltip = false">
           </i>
           <span v-if="showTooltip"
-            class="absolute lg:bottom-16 xs:bottom-20 lg:mr-60 xs:mr-52 text-xl bg-white-game rounded px-2 py-1 transition-all duration-300 ease-in-out">
+            class="absolute lg:bottom-16 xs:bottom-20 lg:mr-64 xs:mr-52 text-xl bg-white-game rounded px-2 py-1 transition-all duration-300 ease-in-out">
             Free shipping if you spend more than €50.
           </span>
           <p class="lg:text-3xl xs:text-xl mb-5 pl-36">Shipping: €{{ shippingCost }}</p>

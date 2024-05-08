@@ -3,7 +3,7 @@
   <div>
     <Game :games="games" />
     <transition name="modal">
-      <LoginSuccessModal />
+   
     </transition>
   </div>
 
@@ -11,7 +11,7 @@
 
 <script setup>
 import Game from '@/component/Game.vue';
-import LoginSuccessModal from '@/component/LoginSuccessModal.vue';// Ensure correct path
+// Ensure correct path
 import { ref, onMounted } from 'vue';
 
 const games = ref([]);

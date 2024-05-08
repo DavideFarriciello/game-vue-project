@@ -14,11 +14,15 @@
           <input type="text" v-model="user.username" placeholder="Username" class="mb-5 p-4 rounded-lg outline-none">
 
 
-          <input :type="showPassword ? 'text' : 'password'" v-model="user.password" placeholder="Password" class="mb-1 p-4 rounded-lg outline-none">
+          <input :type="showPassword ? 'text' : 'password'" v-model="user.password" placeholder="Password"
+            class="mb-1 p-4 rounded-lg outline-none">
           <div class="flex items-center mb-5">
             <input type="checkbox" id="showPassword" v-model="showPassword" class="hidden">
-            <label for="showPassword" class="ml-2 text-sm cursor-pointer flex items-center text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out mt-1">
-              <span :class="{' bg-gradient-to-r from-fuchsia-900 to-fuchsia-800': showPassword, 'bg-gray-200': !showPassword}" class="inline-block w-5 h-5 rounded-full mr-2 border border-gray-300 cursor-pointer"></span>
+            <label for="showPassword"
+              class="ml-2 text-sm cursor-pointer flex items-center text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out mt-1">
+              <span
+                :class="{ ' bg-gradient-to-r from-fuchsia-900 to-fuchsia-800': showPassword, 'bg-gray-200': !showPassword }"
+                class="inline-block w-5 h-5 rounded-full mr-2 border border-gray-300 cursor-pointer"></span>
               Show password
             </label>
           </div>
@@ -51,7 +55,6 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-import { store } from '../useStore.js';
 import { useToast } from 'vue-toastification';
 
 const router = useRouter();
@@ -72,34 +75,35 @@ function handleSubmit() {
   const baseUrl = 'http://localhost:3000';
   const url = `${baseUrl}${formType.value === 'Login' ? '/login' : '/sign_up'}`;
 
-axios.post(url, user.value)
+  axios.post(url, user.value)
     .then(response => {
       console.log(response);
-      // Handle response based on the actual JSON data sent from the server
       if (response.data.message === 'Login successful' || response.data.message === 'Signup successful') {
-        // Store userId in the client for future use if needed
         localStorage.setItem('userId', response.data.userId);
-         // Save userId to localStorage
-        store.isLoggedIn = true;
-        store.showLoginSuccessModal = true; // Set a flag in the store
-        router.push({ name: 'Home' });
+        store.isLoggedIn = true; // Ensure this is reactive
+
+        // Routing after setting modal visibility
+        router.push({ name: 'Home' }).catch(err => {
+          console.error("Routing error:", err);
+        });
+
         if (formType.value === 'Register') {
           alert('Your account has been successfully registered.');
         }
-        
       } else {
         toast.warning(response.data.message || 'Invalid login credentials', { timeout: 4000 });
       }
     })
     .catch(error => {
-      console.error('Error submitting form:', error);
-      toast.warning(`${error.response?.data || 'An unexpected error occurred'}`, { timeout: 4000 });
+      const errorMessage = error.response?.data || 'An unexpected error occurred';
+      toast.warning(errorMessage, { timeout: 4000 });
+      console.error('Error submitting form:', errorMessage);
     })
     .finally(() => {
       isLoading.value = false;
     });
-
 }
+
 
 function toggleFormType() {
   formType.value = formType.value === 'Login' ? 'Register' : 'Login';

@@ -38,7 +38,7 @@ const router = useRouter();
 function handleLogout() {
   if (confirm('Are you sure you want to log out?')) {
     logout();
-    router.push('/login');
+    router.push('/');
   }
 }
 

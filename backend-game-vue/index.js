@@ -6,6 +6,7 @@ const GameModel = require('./models/games');
 const UserModel = require('./models/user');
 const CartModel = require('./models/cart');
 const FavoritesModel = require('./models/favorites');
+require('dotenv').config();
 
 const app = express();
 
@@ -69,6 +70,8 @@ if (!password) {
 app.post("/sign_up", (req, res) => {
   const { username, password, email } = req.body;
 
+  
+
   if (!username) {
     return res.status(400).send('Please provide a username!');
 }
@@ -81,27 +84,39 @@ if (!email) {
 
   const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{5,}$/;
 
-  if (!passwordRegex.test(password)) {
-    return res.status(400).send('Password must be at least 5 characters long and include at least one number and one special character.');
-  }
+  UserModel.findOne({ $or: [{ username: username }, { email: email }] })
+  .then(existingUser => {
+    if (existingUser) {
+      return res.status(400).send('Username or email already in use');
+    }
 
-  const newUser = new UserModel({
-    user: username,
-    password: password,
-    email: email
-  });
-
- 
-  newUser.save()
-    .then(user => {
-      console.log("Record Inserted Successfully", user);
-      res.status(202).send('Signup successful');
-    })
-    .catch(err => {
-      console.error("Error in saving to database: ", err);
-      res.status(500).send("Error in saving to database");
+    // Create new user if username and email are unique
+    const newUser = new UserModel({
+      username: username,
+      password: password,
+      email: email
     });
+
+    newUser.save()
+      .then(user => {
+        console.log("User registered successfully:", user);
+        res.status(201).send({ message: 'Signup successful', userId: user._id });
+      })
+      .catch(err => {
+        console.error("Error in saving to database: ", err);
+        res.status(500).send("Error in saving to database");
+      });
+
+  })
+  .catch(err => {
+    console.error("Database query error:", err);
+    res.status(500).send("Error checking user uniqueness");
+  });
 });
+
+console.log('Email User:', process.env.EMAIL_USER);
+console.log('Email Password:', process.env.EMAIL_PASS);
+
 
 app.post("/contact", (req, res) => {
   const { name, email, message } = req.body;
@@ -122,9 +137,13 @@ app.post("/contact", (req, res) => {
 function sendEmail(name, user_email, message) {
   const { EMAIL_USER, EMAIL_PASS } = process.env; 
   const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: { user: EMAIL_USER, pass: EMAIL_PASS }
-  });
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    }
+});
+
 
   const mailOptions = {
       from: EMAIL_USER,

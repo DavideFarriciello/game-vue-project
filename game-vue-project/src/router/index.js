@@ -10,7 +10,7 @@ import { store } from '../useStore.js';
 
 const routes = [
   {
-    path: '/login',
+    path: '/',
     name: 'Login',
     component: Login,
     meta: { requiresGuest: true }
@@ -53,6 +53,15 @@ router.beforeEach((to, from, next) => {
   } else {
     next();
   }
+});
+
+router.beforeEach((to, from, next) => {
+  if (from.name === 'Login' && to.name === 'Home' && store.isLoggedIn) {
+    store.showLoginSuccessModal = true;
+  } else {
+    store.showLoginSuccessModal = false;
+  }
+  next();
 });
 
 router.afterEach((to, from) => {
