@@ -12,6 +12,7 @@
     "axios": "^1.6.8",
     "json-server": "^1.0.0-alpha.23",
     "primeicons": "^7.0.0",
+    "sweetalert2": "^11.10.8",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
     "vue-toastification": "^2.0.0-rc.5"

@@ -31,15 +31,32 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { logout } from '../useStore';
+import Swal from 'sweetalert2'
 
 const open = ref(false);
 const router = useRouter();
 
 function handleLogout() {
-  if (confirm('Are you sure you want to log out?')) {
-    logout();
-    router.push('/');
-  }
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You will be logged out of your account!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#702459',
+    cancelButtonColor: '#702459',
+    confirmButtonText: 'Yes, log out!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      logout();
+      router.push('/login');
+      Swal.fire({
+            icon: "success",
+            title: "Logged Out",
+            showConfirmButton: false,
+            timer: 1500
+          });
+    }
+  });
 }
 
 function menuOpen() {

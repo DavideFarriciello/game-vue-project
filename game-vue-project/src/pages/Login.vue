@@ -1,8 +1,11 @@
 <template>
   <div>
     <h1
-      class="mt-8 text-7xl flex justify-center pb-7 font-bold text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">
-      Welcome</h1>
+      class="mt-8 text-6xl flex justify-center pb-7 font-bold text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">
+      Welcome to</h1>
+      <h1
+      class="mt-1 text-7xl flex justify-center pb-7 font-bold text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">
+      Game Store</h1>
     <div class="flex justify-center md:p-5">
       <div
         class="bg-white-game rounded-lg lg:w-[40%] xs:w-[80%] lg:h-[480px] xs:h-[450px] mt-7 shadow-2xl transition-all duration-300 ease-in-out hover:scale-105 hover-shadow-red">
@@ -56,6 +59,8 @@ import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
+import { store } from '@/useStore';
+import Swal from 'sweetalert2'
 
 const router = useRouter();
 const toast = useToast();
@@ -87,9 +92,14 @@ function handleSubmit() {
           console.error("Routing error:", err);
         });
 
-        if (formType.value === 'Register') {
-          alert('Your account has been successfully registered.');
-        }
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: formType.value === 'Login' ? "You have successfully logged in." : "Your account has been successfully registered.",
+            showConfirmButton: false,
+            timer: 3000
+          });
+        
       } else {
         toast.warning(response.data.message || 'Invalid login credentials', { timeout: 4000 });
       }
