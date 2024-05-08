@@ -6,7 +6,8 @@ const GameModel = require('./models/games');
 const UserModel = require('./models/user');
 const CartModel = require('./models/cart');
 const FavoritesModel = require('./models/favorites');
-require('dotenv').config();
+require('dotenv').config({ path: './models/nodemailer.env' })
+
 
 const app = express();
 
