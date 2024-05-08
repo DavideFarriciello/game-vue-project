@@ -1,8 +1,10 @@
 <template>
   <div>
-    <h2 class="lg:text-5xl xs:text-3xl flex justify-center lg:mt-10 xs:mt-3 font-bold text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">Favorites</h2>
+    <h2
+      class="lg:text-5xl xs:text-3xl flex justify-center lg:mt-10 xs:mt-3 font-bold text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">
+      Favorites</h2>
     <div v-if="favoritesItems.length > 0" class="flex flex-wrap justify-center">
-      <div v-for="item in favoritesItems" :key="item.gameId" >
+      <div v-for="item in favoritesItems" :key="item.gameId">
         <div
           class="flex flex-row space-x-4 bg-white-game lg:mt-8 xs:mt-3 pt-2 p-4 lg:mx-24 xs:mx-1 rounded-lg shadow-2xl hover-shadow-purple transition-all duration-300 ease-in-out hover:scale-105 lg:w-[90%] xs:w-[97%] h-[170px] ">
           <img :src="item.gameImage" :alt="item.gameName" class="rounded-md ">
@@ -19,7 +21,9 @@
       </div>
     </div>
     <div v-else>
-      <h2 class="lg:text-5xl xs:text-3xl flex justify-center mt-8 pb-2 xs:px-2 text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">Any item is being added to the favorites</h2>
+      <h2
+        class="lg:text-5xl xs:text-3xl flex justify-center mt-8 pb-2 xs:px-2 text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">
+        Any item is being added to the favorites</h2>
     </div>
   </div>
 </template>
@@ -30,7 +34,7 @@ import { ref, onMounted } from 'vue';
 const userId = localStorage.getItem('userId');
 const favoritesItems = ref([]);
 
-
+// Fetch Favorites Items
 async function fetchFavoritesItems() {
   try {
     const response = await fetch(`http://localhost:3000/get-favorites?userId=${userId}`);
@@ -48,6 +52,7 @@ onMounted(async () => {
   await fetchFavoritesItems();
 });
 
+//Remove Item from Favorites
 async function removeFromFavorites(gameId) {
   try {
     const response = await fetch('http://localhost:3000/remove-from-favorites', {
@@ -73,5 +78,3 @@ async function removeFromFavorites(gameId) {
   }
 }
 </script>
-
-

@@ -3,20 +3,15 @@
     <h1
       class="mt-8 text-6xl flex justify-center pb-7 font-bold text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">
       Welcome to</h1>
-      <h1
+    <h1
       class="mt-1 text-7xl flex justify-center pb-7 font-bold text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">
       Game Store</h1>
     <div class="flex justify-center md:p-5">
       <div
         class="bg-white-game rounded-lg lg:w-[40%] xs:w-[80%] lg:h-[480px] xs:h-[450px] mt-7 shadow-2xl transition-all duration-300 ease-in-out hover:scale-105 hover-shadow-purple">
-
-        <form @submit.prevent="handleSubmit" class="flex flex-col p-4">
+        <form @submit.prevent="handleSubmitAuthentication" class="flex flex-col p-4">
           <h2 class="text-5xl flex justify-center pb-7 font-bold text-gradient-from-fucsia">{{ formType }}</h2>
-
-
           <input type="text" v-model="user.username" placeholder="Username" class="mb-5 p-4 rounded-lg outline-none">
-
-
           <input :type="showPassword ? 'text' : 'password'" v-model="user.password" placeholder="Password"
             class="mb-1 p-4 rounded-lg outline-none">
           <div class="flex items-center mb-5">
@@ -35,13 +30,10 @@
               class="mb-3 p-4 rounded-lg w-full outline-none">
           </div>
 
-
           <button type="submit"
             class="bg-gradient-to-r from-fuchsia-900 to-slate-950 text-white font-bold text-xl w-full py-2 ml-2 mt-3 mb-3 rounded-3xl shadow hover:bg-fuchsia-900 hover:shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out">
             {{ formType }}
           </button>
-
-
           <p class="text-center mt-1">
             <span @click="toggleFormType"
               class="text-xl text-gradient-from-fucsia hover:-translate-y-1  cursor-pointer">
@@ -75,7 +67,8 @@ const user = ref({
 const showPassword = ref(false);
 const isLoading = ref(false);
 
-function handleSubmit() {
+// Authentication 
+function handleSubmitAuthentication() {
   isLoading.value = true;
   const baseUrl = 'http://localhost:3000';
   const url = `${baseUrl}${formType.value === 'Login' ? '/login' : '/sign_up'}`;
@@ -92,14 +85,14 @@ function handleSubmit() {
           console.error("Routing error:", err);
         });
 
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: formType.value === 'Login' ? "You have successfully logged in." : "Your account has been successfully registered.",
-            showConfirmButton: false,
-            timer: 3000
-          });
-        
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: formType.value === 'Login' ? "You have successfully logged in." : "Your account has been successfully registered.",
+          showConfirmButton: false,
+          timer: 3000
+        });
+
       } else {
         toast.warning(response.data.message || 'Invalid login credentials', { timeout: 4000 });
       }

@@ -3,7 +3,8 @@
     <div
       class="sticky top-0 z-50 flex items-center lg:justify-between bg-gradient-to-r from-fuchsia-900 to-slate-950 px-10 py-2 shadow-md">
       <router-link :to="{ name: 'Home' }"
-        class=" text-4xl font-bold text-white transition duration-300 ease-in-out hover:text-fuchsia-200 hover:-translate-y-1">Game Store</router-link>
+        class=" text-4xl font-bold text-white transition duration-300 ease-in-out hover:text-fuchsia-200 hover:-translate-y-1">Game
+        Store</router-link>
       <span v-if="!isLargeScreen" @click="menuOpen" class="cursor-pointer text-4xl absolute right-6 top-2"
         :class="open ? 'pi pi-times-circle text-white rotate-180 transform transition-transform duration-500 ease-in-out' : 'pi pi-bars text-white transition-transform duration-500 ease-in-out'"></span>
       <div
@@ -21,7 +22,7 @@
     </div>
     <router-view v-slot="{ Component }">
       <transition name="page-slide" mode="out-in">
-        <component :is="Component" :key="$route.fullPath"/>
+        <component :is="Component" :key="$route.fullPath" />
       </transition>
     </router-view>
   </div>
@@ -36,6 +37,7 @@ import Swal from 'sweetalert2'
 const open = ref(false);
 const router = useRouter();
 
+// logout sweetAlert
 function handleLogout() {
   Swal.fire({
     title: 'Are you sure?',
@@ -50,15 +52,16 @@ function handleLogout() {
       logout();
       router.push('/login');
       Swal.fire({
-            icon: "success",
-            title: "Logged Out",
-            showConfirmButton: false,
-            timer: 1500
-          });
+        icon: "success",
+        title: "Logged Out",
+        showConfirmButton: false,
+        timer: 1500
+      });
     }
   });
 }
 
+// xs screen
 function menuOpen() {
   open.value = !open.value;
 }
@@ -85,13 +88,13 @@ onUnmounted(() => {
 
 <style>
 .page-slide-enter-from,
-.page-slide-leave-to{
+.page-slide-leave-to {
   opacity: 0;
   transform: translateX(60px);
 }
 
 .page-slide-enter-active,
-.page-slide-leave-active{
+.page-slide-leave-active {
   transition: 400ms ease all;
 }
 </style>

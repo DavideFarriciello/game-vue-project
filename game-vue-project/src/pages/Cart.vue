@@ -62,6 +62,7 @@ onMounted(async () => {
   await fetchCartItems();
 });
 
+// Fetch Cart Items
 async function fetchCartItems() {
   try {
     const response = await fetch(`http://localhost:3000/get-cart?userId=${userId}`);
@@ -76,6 +77,7 @@ async function fetchCartItems() {
   }
 }
 
+// Update Total price of the cart
 function updateTotals() {
   let subtotal = 0;
   cartItems.value.forEach(item => {
@@ -93,7 +95,7 @@ function updateTotals() {
   finalTotal.value = parseFloat((subtotal + shippingCost.value).toFixed(2));
 }
 
-
+// Remove from Cart
 async function removeFromCart(gameId) {
   try {
     const response = await fetch('http://localhost:3000/remove-from-cart', {

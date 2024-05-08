@@ -10,10 +10,10 @@
         <h2 class="lg:text-3xl xs:text-xl mt-8">Price: {{ game.price }}€</h2>
         <div class="flex flex-row ">
           <button @click.stop="addToCart(game)"
-          :class="['bg-slate-950 text-white font-bold lg:text-xl lg:w-52 xs:w-24 xs:text-sm  xs:py-4 py-6 ml-2 mt-5 rounded-3xl shadow hover:bg-fuchsia-900 hover:shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out', isCarted(game.id) ? '!bg-fuchsia-900' : 'hover:bg-fuchsia-900 hover:shadow-lg']">
+            :class="['bg-slate-950 text-white font-bold lg:text-xl lg:w-52 xs:w-24 xs:text-sm  xs:py-4 py-6 ml-2 mt-5 rounded-3xl shadow hover:bg-fuchsia-900 hover:shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out', isCarted(game.id) ? '!bg-fuchsia-900' : 'hover:bg-fuchsia-900 hover:shadow-lg']">
             {{ isCarted(game.id) ? 'Added ' : 'Add to Cart' }}
-            </button>
-          <i  @click.stop="addToFavorites(game)"
+          </button>
+          <i @click.stop="addToFavorites(game)"
             :class="['pi pi-heart lg:ml-8 lg:mt-8 xs:mt-7 lg:text-5xl xs:text-4xl xs:ml-2  bg-white-game hover:-translate-y-1 transition duration-300 ease-in-out hover:cursor-pointer', isFavorite(game.id) ? 'text-fuchsia-900' : 'hover:text-fuchsia-900']"></i>
         </div>
         <p class="lg:text-xl mb-1 lg:mt-24 xs:mt-3 xs:text-base">Type: {{ game.type }}</p>
@@ -66,14 +66,15 @@ import Game from '@/component/Game.vue';
 import { watch, ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
-import { inject, reactive } from 'vue';
 
 const games = ref([]);
 const cart = ref(new Map());
 const favorites = ref(new Map());
 const userId = localStorage.getItem('userId');
 
+const toast = useToast();
 
+// Random Game (other games section)
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -81,7 +82,7 @@ function shuffleArray(array) {
   }
 }
 
-// Function to fetch games from the backend
+// Fetch games from the backend
 const fetchGames = async () => {
   try {
     const response = await fetch('http://localhost:3000/games');
@@ -118,7 +119,7 @@ const addToCart = async (game) => {
     toast.info('This game is already in your cart.');
     return;
   }
-  
+
   const payload = {
     userId: userId,
     gameId: game.id,
@@ -146,7 +147,6 @@ const addToCart = async (game) => {
     toast.error('Failed to add to cart');
   }
 };
-
 
 const isCarted = (gameId) => cart.value.has(gameId);
 
@@ -224,9 +224,6 @@ watch(() => route.query, () => {
 
 console.log("Current route query:", route.query);
 
-const toast = useToast();
-
-
 
 if (route.query.game) {
   game.value = JSON.parse(route.query.game);
@@ -235,6 +232,7 @@ if (route.query.game) {
 }
 
 
+// Description functions
 const showFullDescription = ref(false);
 
 const isDescriptionLong = computed(() => {

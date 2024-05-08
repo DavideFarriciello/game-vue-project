@@ -11,6 +11,7 @@ import { ref, onMounted } from 'vue';
 
 const games = ref([]);
 
+//Fetch game from the backend
 const fetchGames = async () => {
   try {
     const response = await fetch('http://localhost:3000/games');
@@ -25,7 +26,5 @@ const fetchGames = async () => {
   }
 };
 
-
 onMounted(fetchGames);
 </script>
-

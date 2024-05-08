@@ -55,15 +55,6 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-router.beforeEach((to, from, next) => {
-  if (from.name === 'Login' && to.name === 'Home' && store.isLoggedIn) {
-    store.showLoginSuccessModal = true;
-  } else {
-    store.showLoginSuccessModal = false;
-  }
-  next();
-});
-
 router.afterEach((to, from) => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });

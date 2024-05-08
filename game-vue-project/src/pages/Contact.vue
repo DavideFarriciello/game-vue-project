@@ -23,7 +23,7 @@
       <div
         class="bg-white-game rounded-lg lg:w-[40%] xs:w-[90%] lg:h-[390px] xs:[370px] lg:my-8 xs:my-1 shadow-2xl transition-all duration-300 ease-in-out hover:scale-105 hover-shadow-purple">
 
-        <form class="flex flex-col px-4" @submit="handleSubmit">
+        <form class="flex flex-col px-4" @submit="handleSubmitForm">
           <input type="text" name="name" placeholder="Name" class="mt-3 mb-3 p-4 rounded-lg outline-none">
           <input type="email" name="email" placeholder="Email" class="mb-3 p-4 rounded-lg w-full outline-none">
           <textarea name="message" placeholder="Message" rows="4"
@@ -45,7 +45,8 @@ import { useToast } from 'vue-toastification';
 
 const toast = useToast();
 
-const handleSubmit = async (event) => {
+// Sumbit Form 
+const handleSubmitForm = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const formProps = Object.fromEntries(formData);
@@ -63,6 +64,7 @@ const handleSubmit = async (event) => {
     }
 };
 
+// reset the form after submited
 const resetForm = (form) => {
     form.reset();
 };
