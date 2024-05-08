@@ -8,7 +8,6 @@ const CartModel = require('./models/cart');
 const FavoritesModel = require('./models/favorites');
 require('dotenv').config({ path: './models/nodemailer.env' })
 
-
 const app = express();
 
 // Middleware setup
@@ -33,13 +32,14 @@ mongoose.connect(DB_URL)
     res.send("Welcome to our website!");
 });
 
-
+//get games
 app.get('/games', (req, res) => {
   GameModel.find()
     .then(games => res.json(games))
     .catch(err => res.status(500).json(err));
 });
 
+//login
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
 
@@ -68,6 +68,7 @@ if (!password) {
   });
 });
 
+//sign up
 app.post("/sign_up", (req, res) => {
   const { username, password, email } = req.body;
 
@@ -91,7 +92,6 @@ if (!email) {
       return res.status(400).send('Username or email already in use');
     }
 
-    // Create new user if username and email are unique
     const newUser = new UserModel({
       username: username,
       password: password,
@@ -115,10 +115,8 @@ if (!email) {
   });
 });
 
-console.log('Email User:', process.env.EMAIL_USER);
-console.log('Email Password:', process.env.EMAIL_PASS);
 
-
+//contact
 app.post("/contact", (req, res) => {
   const { name, email, message } = req.body;
 
@@ -158,7 +156,6 @@ function sendEmail(name, user_email, message) {
 
 
 // add-to-cart
-// Assuming that the gameImage URL is included in the request body
 app.post('/add-to-cart', async (req, res) => {
   const { userId, gameId, quantity, gameName, gamePrice, gameImage } = req.body;
   
@@ -169,10 +166,8 @@ app.post('/add-to-cart', async (req, res) => {
   try {
     const userCart = await CartModel.findOne({ userId });
     if (userCart) {
-      // Check if the game is already in the cart
       const gameIndex = userCart.items.findIndex(item => item.gameId.toString() === gameId);
       if (gameIndex > -1) {
-        // Optionally update the quantity here if needed
         userCart.items[gameIndex].quantity += quantity;
       } else {
         userCart.items.push({ gameId, quantity, gameName, gamePrice, gameImage });
@@ -180,7 +175,6 @@ app.post('/add-to-cart', async (req, res) => {
       await userCart.save();
       res.status(200).send('Added to cart');
     } else {
-      // Create new cart if not existing
       const newCart = new CartModel({
         userId,
         items: [{ gameId, quantity, gameName, gamePrice, gameImage }]
@@ -195,7 +189,7 @@ app.post('/add-to-cart', async (req, res) => {
 });
 
 
-// Get user cart
+//Get user cart
 app.get('/get-cart', async (req, res) => {
   const { userId } = req.query;
 
@@ -216,7 +210,7 @@ app.get('/get-cart', async (req, res) => {
   }
 });
 
-// Remove item from cart
+//Remove item from cart
 app.delete('/remove-from-cart', async (req, res) => {
   const { userId, gameId } = req.body;
 
@@ -243,7 +237,6 @@ app.delete('/remove-from-cart', async (req, res) => {
 
 
 //favorites 
-
 app.post('/add-to-favorites', async (req, res) => {
   const { userId, gameId, quantity, gameName, gamePrice, gameImage } = req.body;
   
@@ -279,6 +272,7 @@ app.post('/add-to-favorites', async (req, res) => {
   }
 });
 
+//Get User Favorites
 app.get('/get-favorites', async (req, res) => {
   const { userId } = req.query;
 
@@ -299,7 +293,7 @@ app.get('/get-favorites', async (req, res) => {
   }
 });
 
-// Remove item from favorites
+//Remove item from favorites
 app.delete('/remove-from-favorites', async (req, res) => {
   const { userId, gameId } = req.body;
 
@@ -313,7 +307,6 @@ app.delete('/remove-from-favorites', async (req, res) => {
           return res.status(404).send('Favorites not found');
       }
 
-      // Filter out the item to be removed
       userFavorites.items = userFavorites.items.filter(item => item.gameId.toString() !== gameId.toString());
       await userFavorites.save();
 
@@ -323,8 +316,3 @@ app.delete('/remove-from-favorites', async (req, res) => {
       res.status(500).send('Failed to remove item from favorites');
   }
 });
-
-
-
-
-
