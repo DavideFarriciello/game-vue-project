@@ -1,11 +1,13 @@
 <template>
   <div>
+    <Sale/>
     <Game :games="games" />
   </div>
 </template>
 
 <script setup>
 import Game from '@/component/Game.vue';
+import Sale from '@/component/Sale.vue';
 
 import { ref, onMounted } from 'vue';
 
