@@ -12,9 +12,9 @@
           <img :src="game.image" :alt="game.name" class="pt-1 px-1">
           <h2 class="lg:text-xl xs:text-base text-center lg:my-4 xs:my-2">{{ formatName(game.name) }}</h2>
           <p class="lg:text-xl xs:text-base text-center lg:my-4 xs:my-2">Price: {{ game.price }}€</p>
-          <div class="flex flex-row">
+          <div class="flex flex-row xs:mb-2">
             <button @click.stop="addToCart(game)"
-              :class="['bg-slate-950 text-white font-bold lg:text-xl lg:w-52 xs:w-28 xs:text-sm  xs:py-2 lg:py-3 ml-2 mt-5 mb-2 rounded-3xl shadow hover:bg-fuchsia-900 hover:shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out', isCarted(game.id) ? '!bg-fuchsia-900' : 'hover:bg-fuchsia-900 hover:shadow-lg']">
+              :class="['bg-slate-950 text-white font-bold lg:text-xl lg:w-52 xs:w-28 xs:text-xs  xs:py-2 lg:py-3 ml-2 mt-5 lg:first-letter:mb-2 rounded-3xl shadow hover:bg-fuchsia-900 hover:shadow-lg hover:-translate-y-1 transition duration-300 ease-in-out', isCarted(game.id) ? '!bg-fuchsia-900' : 'hover:bg-fuchsia-900 hover:shadow-lg']">
               {{ isCarted(game.id) ? 'Added ' : 'Add to Cart' }}
             </button>
             <i @click.stop="addToFavorites(game)"

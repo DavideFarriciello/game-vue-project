@@ -4,7 +4,7 @@
       class="mt-8 text-6xl flex justify-center pb-7 font-bold text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">
       Welcome to</h1>
     <h1
-      class="mt-1 text-7xl flex justify-center pb-7 font-bold text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">
+      class="mt-1 text-7xl flex justify-center pb-7 font-bold text-center text-gradient-from-fucsia hover:-translate-y-1 transition duration-300 ease-in-out">
       Game Store</h1>
     <div class="flex justify-center md:p-5">
       <div
