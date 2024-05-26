@@ -51,10 +51,10 @@ if (!password) {
     return res.status(400).send('Please provide a password!');
 }
 
-  UserModel.findOne({ user: username })
+  UserModel.findOne({ username: username })
   .then(user => {
     if (!user) {
-      return res.status(404).send('Sorry, we couldn\'t find your account!');
+      return res.status(401).send('Sorry, we couldn\'t find your account!');
     }
     if (user.password === password) {
       res.status(200).json({ message: 'Login successful', userId: user._id });

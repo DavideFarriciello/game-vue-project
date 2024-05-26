@@ -40,6 +40,10 @@
               {{ formType === 'Login' ? 'No account? Register' : 'Have an account? Login' }}
             </span>
           </p>
+          <div v-if="formType === 'Login'">
+            <p class="text-center text-lg text-slate-950">or use a demo account credential</p>
+            <p class="text-center text-xl text-gradient-from-fucsia">Username:demo password:Demo1!</p>
+          </div>
         </form>
       </div>
     </div>
